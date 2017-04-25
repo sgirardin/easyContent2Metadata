@@ -28,5 +28,7 @@
 	<import resource="classpath:alfresco/module/${project.artifactId}/context/bootstrap-context.xml" />
     <import resource="classpath:alfresco/module/${project.artifactId}/context/service-context.xml" />
 	<import resource="classpath:alfresco/module/${project.artifactId}/context/webscript-context.xml" />
+	<import resource="classpath:alfresco/module/${project.artifactId}/context/custom-bootstrap-context.xml" />
+	<import resource="classpath:alfresco/module/${project.artifactId}/context/custom-service-context.xml" />
 
 </beans>

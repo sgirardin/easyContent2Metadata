@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="em:extractorMappingModel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+
+    <!-- Optional meta-data about the model -->
+    <description>Extractor Mapping Model</description>
+    <author>david.anton</author>
+    <version>1.0</version>
+
+    <imports>
+        <!-- Import Alfresco Dictionary Definitions -->
+        <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+        <!-- Import Alfresco Content Domain Model Definitions -->
+        <import uri="http://www.alfresco.org/model/content/1.0" prefix="cm"/>
+        <!-- Import Alfresco System Model Definitions -->
+        <import uri="http://www.alfresco.org/model/system/1.0" prefix="sys"/>
+        <import uri="http://www.alfresco.org/model/datalist/1.0" prefix="dl" />
+    </imports>
+
+    <namespaces>
+        <namespace uri="http://www.mimacom.com/alfresco/extractor_mapping/1.0" prefix="em" />
+    </namespaces>
+
+    <types>
+        <type name="em:extractorMappingDatalist">
+            <title>Extractor Mapping Datalist</title>
+            <parent>dl:dataListItem</parent>
+            <mandatory-aspects>
+                <aspect>em:a_datalist</aspect>
+                <aspect>em:a_datalist_active</aspect>
+            </mandatory-aspects>
+        </type>
+    </types>
+    
+    <aspects>
+        <aspect name="em:a_datalist">
+            <properties>
+                <property name="em:type">
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <multiple>false</multiple>
+                </property>
+                <property name="em:property">
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <multiple>false</multiple>
+                </property>
+                <property name="em:configuration">
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <multiple>false</multiple>
+                </property>
+                <property name="em:value">
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <multiple>false</multiple>
+                </property>
+            </properties>
+        </aspect>
+
+        <aspect name="em:a_datalist_active">
+            <properties>
+                <property name="em:item_active">
+                    <type>d:boolean</type>
+                    <default>true</default>
+                </property>
+            </properties>
+        </aspect>
+    </aspects>
+
+
+</model>
