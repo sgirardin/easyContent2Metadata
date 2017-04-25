@@ -1,5 +1,6 @@
 package com.mimacom.alfresco.utils;
 
+import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;
 
 /**
@@ -14,4 +15,9 @@ public class Constants {
     public static final QName PROP_PROPERTY      = QName.createQName(EXTRACTOR_MAPPING_MODEL, "property");
     public static final QName PROP_CONFIGURATION = QName.createQName(EXTRACTOR_MAPPING_MODEL, "configuration");
     public static final QName PROP_VALUE         = QName.createQName(EXTRACTOR_MAPPING_MODEL, "value");
+
+    public static final QName ON_CREATE_NODE = QName.createQName(NamespaceService.ALFRESCO_URI, "onCreateNode");
+    public static final QName ON_UPDATE_CONTENT = QName.createQName(NamespaceService.ALFRESCO_URI, "onUpdateContent");
+
+
 }

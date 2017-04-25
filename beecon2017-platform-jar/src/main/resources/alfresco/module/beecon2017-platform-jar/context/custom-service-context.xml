@@ -9,7 +9,8 @@
         <property name="searchService" ref="SearchService" />
     </bean>
 
-    <bean id="com.mimacom.alfresco.fillmetadata.FillMetadataAction" class="com.mimacom.alfresco.fillMetadata.FillMetadataAction" >
-        <property name="dataListsResolver" ref="com.mimacom.alfresco.utils.DataListsResolver" />
+    <bean id="com.mimacom.alfresco.fillmetadata.FillMetadataBehaviour" class="com.mimacom.alfresco.fillMetadata.FillMetadataBehaviour" >
+        <property name="nodeService" ref="NodeService" />
+        <property name="contentService" ref="ContentService" />
     </bean>
 </beans>

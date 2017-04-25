@@ -65,8 +65,7 @@ public class DataListsResolver {
 	}
 
 	
-	public void setSearchService(SearchService searchService)
-	{
+	public void setSearchService(SearchService searchService) {
 		this.searchService = searchService;
 	}
 	public void setNodeService(NodeService nodeService) {

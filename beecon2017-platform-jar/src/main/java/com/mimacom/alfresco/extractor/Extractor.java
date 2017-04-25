@@ -1,9 +1,6 @@
 package com.mimacom.alfresco.extractor;
 
 
-import org.alfresco.service.cmr.repository.NodeRef;
-import ucar.nc2.dataset.CoordinateAxis2D;
-
 import java.awt.*;
 import java.io.InputStream;
 
@@ -14,7 +11,7 @@ import java.io.InputStream;
 public interface Extractor {
 
 
-    String extractMetaDataFieldByCoordinate(InputStream node, Point top, Point bottom);
+    String extractMetaDataFieldByCoordinate(InputStream node, Rectangle rectangle);
 
     String extractMetaDataFieldByRegex(InputStream node, String regex);
 }
