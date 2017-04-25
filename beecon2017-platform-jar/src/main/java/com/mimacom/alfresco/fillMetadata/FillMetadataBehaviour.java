@@ -15,6 +15,8 @@ import org.alfresco.service.cmr.repository.ContentService;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.namespace.QName;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
@@ -31,6 +33,8 @@ public class FillMetadataBehaviour
         implements NodeServicePolicies.OnCreateNodePolicy,
         ContentServicePolicies.OnContentUpdatePolicy{
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+
     private NodeService nodeService;
     private ContentService contentService;
 
@@ -38,6 +42,7 @@ public class FillMetadataBehaviour
 
     private Behaviour onCreateNode;
     private Behaviour onContentUpdate;
+    private Behaviour onSetNodeType;
 
     @Autowired
     private DataListsResolver dataListsResolver;
@@ -52,8 +57,12 @@ public class FillMetadataBehaviour
         this.onContentUpdate = new JavaBehaviour(this, "onContentUpdate",
                 Behaviour.NotificationFrequency.TRANSACTION_COMMIT);
 
+        this.onSetNodeType = new JavaBehaviour(this, "onSetNodeType",
+                Behaviour.NotificationFrequency.TRANSACTION_COMMIT);
+
         this.policyComponent.bindClassBehaviour(Constants.ON_CREATE_NODE, ContentModel.TYPE_CONTENT, this.onCreateNode);
         this.policyComponent.bindClassBehaviour(Constants.ON_UPDATE_CONTENT, ContentModel.TYPE_CONTENT, this.onContentUpdate);
+        this.policyComponent.bindClassBehaviour(Constants.ON_SET_NODE_TYPE, ContentModel.TYPE_CONTENT, this.onSetNodeType);
     }
 
     @Override
@@ -86,20 +95,27 @@ public class FillMetadataBehaviour
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
     }
 
     private Map<QName, Serializable> extractMapValues(NodeRef nodeRef, Map<String, String> toMap, String configurationType){
+        String value;
         Map<QName, Serializable> extractorValues = new HashMap<>();
         for (Map.Entry<String, String> entry : toMap.entrySet()) {
             switch (configurationType){
                 case ConfigurationsEnum.COORDINATES:
-                    extractorValues.put(QName.createQName(entry.getKey()), extractor.extractMetaDataFieldByCoordinate(getInputStream(nodeRef), transformToRectanlge(entry.getValue().split(",")[0], entry.getValue().split(",")[1], entry.getValue().split(",")[2], entry.getValue().split(",")[3])));
+                    value = extractor.extractMetaDataFieldByCoordinate(getInputStream(nodeRef), transformToRectanlge(entry.getValue().split(",")[0], entry.getValue().split(",")[1], entry.getValue().split(",")[2], entry.getValue().split(",")[3]));
+                    if (StringUtils.hasText(value)) {
+                        extractorValues.put(QName.createQName(entry.getKey()), value);
+                    }
                     break;
                 case ConfigurationsEnum.REGEX:
-                    extractorValues.put(QName.createQName(entry.getKey()), extractor.extractMetaDataFieldByRegex(getInputStream(nodeRef), entry.getValue()));
+                    value = extractor.extractMetaDataFieldByRegex(getInputStream(nodeRef), entry.getValue());
+                    if (StringUtils.hasText(value)) {
+                        extractorValues.put(QName.createQName(entry.getKey()), value);
+                    }
                     break;
                 case ConfigurationsEnum.VALUE:
                     extractorValues.put(QName.createQName(entry.getKey()), entry.getValue());

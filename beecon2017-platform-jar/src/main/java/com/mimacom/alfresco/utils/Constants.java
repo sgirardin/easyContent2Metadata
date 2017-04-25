@@ -18,6 +18,5 @@ public class Constants {
 
     public static final QName ON_CREATE_NODE = QName.createQName(NamespaceService.ALFRESCO_URI, "onCreateNode");
     public static final QName ON_UPDATE_CONTENT = QName.createQName(NamespaceService.ALFRESCO_URI, "onUpdateContent");
-
-
+    public static final QName ON_SET_NODE_TYPE = QName.createQName(NamespaceService.ALFRESCO_URI, "onSetNodeType");
 }
