@@ -22,8 +22,6 @@ public class PDFExtractor implements Extractor{
 
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
-    public ContentService contentService;
-
     private static final String METADATA_REGION = "metadata";
 
 
@@ -58,8 +56,6 @@ public class PDFExtractor implements Extractor{
             pdfDocument = PDDocument.load(documentStream);
 
             PDFTextStripperByArea stripper = new PDFTextStripperByArea();
-
-            PDPage firstPage = (PDPage)pdfDocument.getDocumentCatalog().getAllPages().get(0);
             stripper.getText(pdfDocument);
 
             String pdfDocumentString = stripper.getText(pdfDocument);
