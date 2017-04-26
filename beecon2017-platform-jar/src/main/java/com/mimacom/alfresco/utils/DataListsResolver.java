@@ -34,8 +34,12 @@ public class DataListsResolver {
 	public Map<String, String> getMappingsByConfigurationAndType(String type, String configuration){
 		HashMap<String, String> hash = new HashMap<>();
 		List<NodeRef> datalistValues = getExtractorDatalist();
+		String typeStr, configurationStr;
 		for (NodeRef nodeRef : datalistValues){
-			if (nodeService.getProperty(nodeRef, Constants.PROP_TYPE).equals(type)
+			typeStr = nodeService.getProperty(nodeRef, Constants.PROP_TYPE).toString();
+			configurationStr = nodeService.getProperty(nodeRef, Constants.PROP_CONFIGURATION).toString();
+			if (typeStr != null && configurationStr != null &&
+					nodeService.getProperty(nodeRef, Constants.PROP_TYPE).equals(type)
 					&& nodeService.getProperty(nodeRef, Constants.PROP_CONFIGURATION).equals(configuration)){
 				hash.put(nodeService.getProperty(nodeRef, Constants.PROP_PROPERTY).toString(), nodeService.getProperty(nodeRef, Constants.PROP_VALUE).toString());
 			}

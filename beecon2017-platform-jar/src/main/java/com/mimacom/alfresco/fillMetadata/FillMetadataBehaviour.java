@@ -140,7 +140,7 @@ public class FillMetadataBehaviour
     }
 
     private Rectangle transformToRectanlge(String x1, String y1, String x2, String y2){
-        return new Rectangle(Integer.parseInt(x1), Integer.parseInt(y1), Integer.parseInt(x2) - Integer.parseInt(x1), Integer.parseInt(y2) - Integer.parseInt(y1));
+        return new Rectangle(Integer.parseInt(x1), Integer.parseInt(y1), Integer.parseInt(x2) - Integer.parseInt(x1), Integer.parseInt(y1) - Integer.parseInt(y2));
     }
 
 
