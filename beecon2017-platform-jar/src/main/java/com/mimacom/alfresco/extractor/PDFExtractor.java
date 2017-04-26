@@ -42,6 +42,8 @@ public class PDFExtractor implements Extractor{
 
             metadataValue = stripper.getTextForRegion( METADATA_REGION );
 
+            logger.info("Extracted metadata: "+ metadataValue +" at: " + searchArea.toString());
+
         } catch (IOException exception){
             logger.error("Issue extracting metadata");
         }
@@ -65,6 +67,10 @@ public class PDFExtractor implements Extractor{
             {
                 metadataValue = matcher.group(1);
             }
+
+
+            logger.info("Extracted metadata: "+ metadataValue +" for: " + regex);
+
         } catch (IOException exception){
             logger.error("Issue extracting metadata");
         }
