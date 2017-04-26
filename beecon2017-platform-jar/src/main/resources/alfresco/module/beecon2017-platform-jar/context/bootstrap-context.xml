@@ -12,7 +12,7 @@
         <property name="models">
             <list>
                 <value>alfresco/module/${project.artifactId}/model/content-model.xml</value>
-                <value>alfresco/module/${project.artifactId}/model/extractor-mapping-model.xml</value>
+                <value>alfresco/module/${project.artifactId}/model/beecon-model.xml</value>
                 <value>alfresco/module/${project.artifactId}/model/workflow-model.xml</value>
             </list>
         </property>
@@ -20,7 +20,7 @@
             <list>
                 <!-- Bootstrap Resource Bundles for the content model types, aspects, properties etc -->
                 <value>alfresco/module/${project.artifactId}/messages/content-model</value>
-                <value>alfresco/module/${project.artifactId}/messages/extractor-mapping-model</value>
+                <value>alfresco/module/${project.artifactId}/messages/beecon-model</value>
             </list>
         </property>
     </bean>

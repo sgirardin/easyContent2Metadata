@@ -17,7 +17,6 @@ import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.namespace.QName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import java.awt.*;
@@ -31,7 +30,9 @@ import java.util.Map;
  */
 public class FillMetadataBehaviour
         implements NodeServicePolicies.OnCreateNodePolicy,
-        ContentServicePolicies.OnContentUpdatePolicy{
+        ContentServicePolicies.OnContentUpdatePolicy,
+        NodeServicePolicies.OnSetNodeTypePolicy
+{
 
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
@@ -44,10 +45,7 @@ public class FillMetadataBehaviour
     private Behaviour onContentUpdate;
     private Behaviour onSetNodeType;
 
-    @Autowired
     private DataListsResolver dataListsResolver;
-
-    @Autowired
     private Extractor extractor;
 
     public void init() {
@@ -67,13 +65,25 @@ public class FillMetadataBehaviour
 
     @Override
     public void onCreateNode(ChildAssociationRef childAssociationRef) {
+        logger.debug("FillMetadataBehaviour: onCreateNode start");
         doBehaviourAction(childAssociationRef.getChildRef());
+        logger.debug("FillMetadataBehaviour: onCreateNode end");
     }
 
     @Override
     public void onContentUpdate(NodeRef nodeRef, boolean b) {
+        logger.debug("FillMetadataBehaviour: onUpdateNode start");
         doBehaviourAction(nodeRef);
+        logger.debug("FillMetadataBehaviour: onUpdateNode end");
     }
+
+    @Override
+    public void onSetNodeType(NodeRef nodeRef, QName qName, QName qName1) {
+        logger.debug("FillMetadataBehaviour: onSetNodeType start");
+        doBehaviourAction(nodeRef);
+        logger.debug("FillMetadataBehaviour: onSetNodeType end");
+    }
+
 
     private void doBehaviourAction(NodeRef nodeRef){
         String nodeType = this.nodeService.getType(nodeRef).toString();
@@ -140,6 +150,14 @@ public class FillMetadataBehaviour
 
     public void setContentService(ContentService contentService) {
         this.contentService = contentService;
+    }
+
+    public void setExtractor(Extractor extractor) {
+        this.extractor = extractor;
+    }
+
+    public void setDataListsResolver(DataListsResolver dataListsResolver) {
+        this.dataListsResolver = dataListsResolver;
     }
 
     public void setPolicyComponent(PolicyComponent policyComponent) {

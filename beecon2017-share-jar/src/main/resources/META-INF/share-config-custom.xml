@@ -43,6 +43,7 @@
             <!-- Define the ACME base doc type as decedent from cm:content -->
             <type name="cm:content">
                 <subtype name="acme:document"/>
+                <subtype name="be:beeconDocument"/>
             </type>
         </types>
     </config>
@@ -430,29 +431,29 @@
     </config>
 
 
-    <config evaluator="model-type" condition="em:extractorMappingDatalist">
+    <config evaluator="model-type" condition="be:extractorMappingDatalist">
         <forms>
             <form>
                 <field-visibility>
-                    <show id="em:type" />
-                    <show id="em:property" />
-                    <show id="em:configuration" />
-                    <show id="em:value" />
-                    <show id="em:item_active" />
+                    <show id="be:type" />
+                    <show id="be:property" />
+                    <show id="be:configuration" />
+                    <show id="be:value" />
+                    <show id="be:item_active" />
                 </field-visibility>
                 <create-form template="../data-lists/forms/dataitem.ftl" />
                 <appearance>
-                    <field id="em:type" mandatory="true" />
-                    <field id="em:property" mandatory="true" />
-                    <field id="em:configuration" mandatory="true" >
+                    <field id="be:type" mandatory="true" />
+                    <field id="be:property" mandatory="true" />
+                    <field id="be:configuration" mandatory="true" >
                         <type>d:text</type>
                         <default>VALUE</default>
                         <constraints>
-                            <constraint ref="em:configuration_types" />
+                            <constraint ref="be:configuration_types" />
                         </constraints>
                     </field>
-                    <field id="em:value" mandatory="true" />
-                    <field id="em:item_active" label-id="form.datalist.active.message" />
+                    <field id="be:value" mandatory="true" />
+                    <field id="be:item_active" label-id="form.datalist.active.message" />
                 </appearance>
             </form>
         </forms>
