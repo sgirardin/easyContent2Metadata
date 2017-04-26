@@ -11,7 +11,9 @@
 
     <bean id="PDFExtractor" class="com.mimacom.alfresco.extractor.PDFExtractor" />
 
-    <bean id="com.mimacom.alfresco.fillmetadata.FillMetadataBehaviour" class="com.mimacom.alfresco.fillMetadata.FillMetadataBehaviour" >
+    <bean id="com.mimacom.alfresco.fillmetadata.FillMetadataBehaviour" class="com.mimacom.alfresco.fillMetadata.FillMetadataBehaviour"
+          init-method="init">
+        <property name="policyComponent" ref="policyComponent" />
         <property name="nodeService" ref="NodeService" />
         <property name="contentService" ref="ContentService" />
         <property name="dataListsResolver" ref="DataListsResolver" />
