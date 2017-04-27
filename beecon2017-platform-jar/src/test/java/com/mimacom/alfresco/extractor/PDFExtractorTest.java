@@ -57,4 +57,16 @@ public class PDFExtractorTest{
 
     }
 
+    @Test
+    public void testDateByCoordinate(){
+        //Given
+        Rectangle authorMetaDataZone = new Rectangle(350, 90, 300,20);
+
+        //When
+        String placeOfDocument= pdfExtractor.extractMetaDataFieldByCoordinate(pdfFileStream, authorMetaDataZone);
+        //Then
+        Assert.assertEquals("Returning not the same Value","25-04-2017", placeOfDocument.trim());
+
+    }
+
 }

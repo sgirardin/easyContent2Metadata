@@ -89,19 +89,19 @@ public class FillMetadataBehaviour
         String nodeType = this.nodeService.getType(nodeRef).toString();
         if (StringUtils.hasText(nodeType)) {
             try {
-                Map<QName, Serializable> extractorValues = new HashMap<>();
+                Map<QName, Serializable> nodeProperties = this.nodeService.getProperties(nodeRef);
 
                 // Extract Coordinates
-                extractorValues.putAll(extractMapValues(nodeRef, dataListsResolver.getCoordinatesByType(nodeType), ConfigurationsEnum.COORDINATES));
+                nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getCoordinatesByType(nodeType), ConfigurationsEnum.COORDINATES));
 
                 // Extract Regex
-                extractorValues.putAll(extractMapValues(nodeRef, dataListsResolver.getRegexByType(nodeType), ConfigurationsEnum.REGEX));
+                nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getRegexByType(nodeType), ConfigurationsEnum.REGEX));
 
                 // Extract Constants
-                extractorValues.putAll(extractMapValues(nodeRef, dataListsResolver.getValuesByType(nodeType), ConfigurationsEnum.VALUE));
+                //nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getValuesByType(nodeType), ConfigurationsEnum.VALUE));
 
-                if (extractorValues.size() > 0) {
-                    this.nodeService.setProperties(nodeRef, extractorValues);
+                if (nodeProperties.size() > 0) {
+                    this.nodeService.setProperties(nodeRef, nodeProperties);
                 }
 
             } catch (Exception e) {
@@ -110,24 +110,30 @@ public class FillMetadataBehaviour
         }
     }
 
-    private Map<QName, Serializable> extractMapValues(NodeRef nodeRef, Map<String, String> toMap, String configurationType){
+    private Map<QName, Serializable> extractMapValues(NodeRef nodeRef, Map<String, String> toMap, ConfigurationsEnum configurationType){
         String value;
+        //TODO Not reload all properties SIGI 27.04.2017
         Map<QName, Serializable> extractorValues = new HashMap<>();
         for (Map.Entry<String, String> entry : toMap.entrySet()) {
             switch (configurationType){
-                case ConfigurationsEnum.COORDINATES:
-                    value = extractor.extractMetaDataFieldByCoordinate(getInputStream(nodeRef), transformToRectanlge(entry.getValue().split(",")[0], entry.getValue().split(",")[1], entry.getValue().split(",")[2], entry.getValue().split(",")[3]));
-                    if (StringUtils.hasText(value)) {
-                        extractorValues.put(QName.createQName(entry.getKey()), value);
+                case COORDINATES:
+                    String[] coordinates = entry.getValue().split(",");
+                    Rectangle selectionZone = transformToRectanlge(coordinates[0], coordinates[1], coordinates[2], coordinates[3]);
+                    value = extractor.extractMetaDataFieldByCoordinate(getInputStream(nodeRef), selectionZone);
+
+                    String textCleanup = value.replace("\t"," ");
+                    logger.error("Metadata value: " + textCleanup + " at: " + selectionZone.toString() +" on field " + entry.getKey());
+                    if (StringUtils.hasText(textCleanup)) {
+                        extractorValues.put(QName.createQName(entry.getKey()), textCleanup);
                     }
                     break;
-                case ConfigurationsEnum.REGEX:
+                case REGEX:
                     value = extractor.extractMetaDataFieldByRegex(getInputStream(nodeRef), entry.getValue());
                     if (StringUtils.hasText(value)) {
                         extractorValues.put(QName.createQName(entry.getKey()), value);
                     }
                     break;
-                case ConfigurationsEnum.VALUE:
+                case VALUE:
                     extractorValues.put(QName.createQName(entry.getKey()), entry.getValue());
                     break;
             }
@@ -140,7 +146,7 @@ public class FillMetadataBehaviour
     }
 
     private Rectangle transformToRectanlge(String x1, String y1, String x2, String y2){
-        return new Rectangle(Integer.parseInt(x1), Integer.parseInt(y1), Integer.parseInt(x2) - Integer.parseInt(x1), Integer.parseInt(y1) - Integer.parseInt(y2));
+        return new Rectangle(Integer.parseInt(x1), Integer.parseInt(y1), Integer.parseInt(x2) - Integer.parseInt(x1), Integer.parseInt(y2) - Integer.parseInt(y1));
     }
 
 
