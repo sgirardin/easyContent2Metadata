@@ -7,7 +7,7 @@ import org.alfresco.service.namespace.QName;
  * Created by davidanton on 24/4/17.
  */
 public class Constants {
-    private static final String EXTRACTOR_MAPPING_MODEL = "be";
+    private static final String EXTRACTOR_MAPPING_MODEL = "http://www.mimacom.com/alfresco/beecon/1.0";
 
     public static final String EXTRACTOR_MAPPING_TYPE_LIST = "be:extractorMappingDatalist";
 
