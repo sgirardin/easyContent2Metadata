@@ -40,7 +40,7 @@ public class PDFExtractor implements Extractor{
             PDPage firstPage = (PDPage)pdfDocument.getDocumentCatalog().getAllPages().get(0);
             stripper.extractRegions( firstPage );
 
-            metadataValue = stripper.getTextForRegion( METADATA_REGION );
+            metadataValue = stripper.getTextForRegion( METADATA_REGION).trim();
 
             logger.info("Extracted metadata: "+ metadataValue +" at: " + searchArea.toString());
 
