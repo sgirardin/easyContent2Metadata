@@ -69,4 +69,16 @@ public class PDFExtractorTest{
 
     }
 
+    @Test
+    public void testDateByRegex(){
+        //Given
+        String dateRegex = "\\d{2}(\\.|-)\\d{2}(\\.|-)\\d{4}";
+
+        //When
+        String placeOfDocument= pdfExtractor.extractMetaDataFieldByRegex(pdfFileStream, dateRegex);
+        //Then
+        Assert.assertEquals("Returning not the same Value","25-04-2017", placeOfDocument.trim());
+
+    }
+
 }

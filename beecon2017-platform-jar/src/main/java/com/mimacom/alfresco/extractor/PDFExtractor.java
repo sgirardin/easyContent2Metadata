@@ -3,6 +3,7 @@ package com.mimacom.alfresco.extractor;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 
+import org.apache.pdfbox.util.PDFTextStripper;
 import org.apache.pdfbox.util.PDFTextStripperByArea;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,7 @@ public class PDFExtractor implements Extractor{
 
 
     @Override
-    public String extractMetaDataFieldByCoordinate(InputStream documentStream, Rectangle searchArea) {
+    public String extractMetaDataFieldByCoordinate(InputStream documentStream, Rectangle searchArea){
         PDDocument pdfDocument = null;
         String metadataValue = "";
         try {
@@ -33,7 +34,6 @@ public class PDFExtractor implements Extractor{
 
             PDFTextStripperByArea stripper = new PDFTextStripperByArea();
             stripper.setSortByPosition( true );
-
             stripper.addRegion( METADATA_REGION, searchArea );
 
             PDPage firstPage = (PDPage)pdfDocument.getDocumentCatalog().getAllPages().get(0);
@@ -43,10 +43,19 @@ public class PDFExtractor implements Extractor{
 
             logger.info("Extracted metadata: "+ metadataValue +" at: " + searchArea.toString());
 
-            pdfDocument.close();
         } catch (IOException exception){
             logger.error("Issue extracting metadata");
+        } finally {
+            if( pdfDocument != null )
+            {
+                try {
+                    pdfDocument.close();
+                }  catch (IOException e){
+                    logger.info("Error closing Stream");
+                }
+            }
         }
+
         return metadataValue;
     }
 
@@ -57,23 +66,28 @@ public class PDFExtractor implements Extractor{
         try {
             pdfDocument = PDDocument.load(documentStream);
 
-            PDFTextStripperByArea stripper = new PDFTextStripperByArea();
-            stripper.getText(pdfDocument);
-
+            PDFTextStripper stripper = new PDFTextStripper();
             String pdfDocumentString = stripper.getText(pdfDocument);
+
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(pdfDocumentString);
             if (matcher.find())
             {
-                metadataValue = matcher.group(1);
+                metadataValue = matcher.group(0);
             }
 
-
             logger.info("Extracted metadata: "+ metadataValue +" for: " + regex);
-
-            pdfDocument.close();
         } catch (IOException exception){
             logger.error("Issue extracting metadata");
+        } finally {
+            if( pdfDocument != null )
+            {
+                try {
+                    pdfDocument.close();
+                }  catch (IOException e){
+                    logger.info("Error closing Stream");
+                }
+            }
         }
         return metadataValue;
     }
