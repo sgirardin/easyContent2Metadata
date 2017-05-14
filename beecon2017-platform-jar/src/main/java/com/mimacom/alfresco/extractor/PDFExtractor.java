@@ -1,6 +1,5 @@
 package com.mimacom.alfresco.extractor;
 
-import org.alfresco.service.cmr.repository.ContentService;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 
@@ -8,7 +7,7 @@ import org.apache.pdfbox.util.PDFTextStripperByArea;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
+import java.awt.Rectangle;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.regex.Matcher;
@@ -44,6 +43,7 @@ public class PDFExtractor implements Extractor{
 
             logger.info("Extracted metadata: "+ metadataValue +" at: " + searchArea.toString());
 
+            pdfDocument.close();
         } catch (IOException exception){
             logger.error("Issue extracting metadata");
         }
@@ -71,6 +71,7 @@ public class PDFExtractor implements Extractor{
 
             logger.info("Extracted metadata: "+ metadataValue +" for: " + regex);
 
+            pdfDocument.close();
         } catch (IOException exception){
             logger.error("Issue extracting metadata");
         }
