@@ -9,7 +9,7 @@
                                             nothing is compiled (i.e. you cannot set it to pom) -->
 
     <parent>
-        <groupId>com.mimacom.alfresco</groupId>
+        <groupId>org.alfresco.extension.ec2m</groupId>
         <artifactId>easyContent2Metadata</artifactId>
         <version>0.1-SNAPSHOT</version>
     </parent>
@@ -21,7 +21,7 @@
         <!-- Bring in any custom module that should be tested, by default we bring in the Platform JAR module
              that is generated for the AIO project -->
         <dependency>
-            <groupId>com.mimacom.alfresco</groupId>
+            <groupId>org.alfresco.extension.ec2m</groupId>
             <artifactId>easyContent2Metadata-platform-jar</artifactId>
             <version>0.1-SNAPSHOT</version>
             <scope>test</scope>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<model name="ec2m:beeconModel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+<model name="ec2m:easyContent2Metadata" xmlns="http://www.alfresco.org/model/dictionary/1.0">
 
     <!-- Optional meta-data about the model -->
     <description>EasyContent2Metadata Document Model</description>
@@ -31,7 +31,7 @@
             All other custom document types would extend this one.
         -->
         <type name="ec2m:easyContent2MetadataDocument">
-            <title>EasyContent2Metadata Document Type</title>
+            <title>EasyContent2Metadata Document Type Example</title>
             <parent>cm:content</parent>
             <properties>
                 <property name="ec2m:author">

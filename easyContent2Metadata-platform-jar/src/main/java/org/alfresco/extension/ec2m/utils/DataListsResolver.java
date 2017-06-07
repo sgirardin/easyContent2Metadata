@@ -1,4 +1,4 @@
-package com.mimacom.alfresco.utils;
+package org.alfresco.extension.ec2m.utils;
 
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;

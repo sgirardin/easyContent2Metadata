@@ -1,4 +1,4 @@
-package com.mimacom.alfresco.extractor;
+package org.alfresco.extension.ec2m.extractor;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;

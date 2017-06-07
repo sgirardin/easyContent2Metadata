@@ -8,7 +8,7 @@
     <description>Alfresco extension to help easily extract metadata from content</description>
 
     <parent>
-        <groupId>com.mimacom.alfresco</groupId>
+        <groupId>org.alfresco.extension.ec2m</groupId>
         <artifactId>easyContent2Metadata</artifactId>
         <version>0.1-SNAPSHOT</version>
     </parent>

@@ -1,4 +1,4 @@
-package com.mimacom.alfresco.utils;
+package org.alfresco.extension.ec2m.utils;
 
 import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;

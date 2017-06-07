@@ -1,9 +1,9 @@
-package com.mimacom.alfresco.fillMetadata;
+package org.alfresco.extension.ec2m.fillMetadata;
 
-import com.mimacom.alfresco.extractor.Extractor;
-import com.mimacom.alfresco.utils.ConfigurationsEnum;
-import com.mimacom.alfresco.utils.Constants;
-import com.mimacom.alfresco.utils.DataListsResolver;
+import org.alfresco.extension.ec2m.extractor.Extractor;
+import org.alfresco.extension.ec2m.utils.ConfigurationsEnum;
+import org.alfresco.extension.ec2m.utils.Constants;
+import org.alfresco.extension.ec2m.utils.DataListsResolver;
 import org.alfresco.model.ContentModel;
 import org.alfresco.repo.content.ContentServicePolicies;
 import org.alfresco.repo.node.NodeServicePolicies;
