@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 public class PDFExtractor implements Extractor{
 
     private static final String METADATA_REGION = "metadata";
-    private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+    private static final Logger logger = LoggerFactory.getLogger(PDFExtractor.class.getName());
 
     @Override
     public String extractMetaDataFieldByCoordinate(InputStream documentStream, Rectangle searchArea){
