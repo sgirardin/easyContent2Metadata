@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="ec2m:easyContent2Metadata" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+
+    <!-- Optional meta-data about the model -->
+    <description>EasyContent2Metadata Document Model</description>
+    <author>mimacom</author>
+    <version>1.0</version>
+
+    <imports>
+        <!-- Import Alfresco Dictionary Definitions -->
+        <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+        <!-- Import Alfresco Content Domain Model Definitions -->
+        <import uri="http://www.alfresco.org/model/content/1.0" prefix="cm"/>
+        <!-- Import Alfresco System Model Definitions -->
+        <import uri="http://www.alfresco.org/model/system/1.0" prefix="sys"/>
+        <import uri="http://www.alfresco.org/model/datalist/1.0" prefix="dl" />
+    </imports>
+
+    <!-- Custom namespace for the EM company -->
+    <namespaces>
+        <namespace uri="http://www.mimacom.com/alfresco/easyContent2Metadata/1.0" prefix="ec2m"/>
+    </namespaces>
+
+    <!-- ===============================================================================================================
+        Constraints, Types, and Aspects go here...
+        -->
+
+    <types>
+        <!--
+            EM Enterprise-wide Document root type.
+            All other custom document types would extend this one.
+        -->
+        <type name="ec2m:easyContent2MetadataDocument">
+            <title>EasyContent2Metadata Document Type Example</title>
+            <parent>cm:content</parent>
+            <properties>
+                <property name="ec2m:author">
+                    <title>Document Author</title>
+                    <type>d:text</type>
+                </property>
+                <property name="ec2m:city">
+                    <title>City</title>
+                    <type>d:text</type>
+                </property>
+                <property name="ec2m:date">
+                    <title>Date</title>
+                    <type>d:date</type>
+                </property>
+            </properties>
+        </type>
+
+        <type name="ec2m:extractorMappingDatalist">
+            <title>Extractor Mapping Datalist</title>
+            <parent>dl:dataListItem</parent>
+            <mandatory-aspects>
+                <aspect>ec2m:a_datalist</aspect>
+                <aspect>ec2m:a_datalist_active</aspect>
+            </mandatory-aspects>
+        </type>
+    </types>
+
+    <aspects>
+        <aspect name="ec2m:a_datalist">
+            <properties>
+                <property name="ec2m:type">
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <multiple>false</multiple>
+                </property>
+                <property name="ec2m:property">
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <multiple>false</multiple>
+                </property>
+                <property name="ec2m:configuration">
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <multiple>false</multiple>
+                </property>
+                <property name="ec2m:value">
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <multiple>false</multiple>
+                </property>
+            </properties>
+        </aspect>
+
+        <aspect name="ec2m:a_datalist_active">
+            <properties>
+                <property name="ec2m:item_active">
+                    <type>d:boolean</type>
+                    <default>true</default>
+                </property>
+            </properties>
+        </aspect>
+    </aspects>
+</model>

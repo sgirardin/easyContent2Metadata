@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.mimacom.alfresco</groupId>
-    <artifactId>beecon2017</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <name>AIO - SDK 3.0 Beta</name>
-    <description>All-In-One (AIO) project for SDK 3.0</description>
+    <groupId>org.alfresco.extension.ec2m</groupId>
+    <artifactId>easyContent2Metadata</artifactId>
+    <version>0.1-SNAPSHOT</version>
+    <name>Easy Content 2 Metadata</name>
+    <description>Alfresco extension to help easily extract metadata from content</description>
     <packaging>pom</packaging>
 
     <properties>
@@ -307,7 +307,7 @@
                         <!-- Bring in custom Modules -->
                         <moduleDependency>
                             <groupId>${project.groupId}</groupId>
-                            <artifactId>beecon2017-platform-jar</artifactId>
+                            <artifactId>easyContent2Metadata-platform-jar</artifactId>
                             <version>${project.version}</version>
                         </moduleDependency>
 
@@ -328,7 +328,7 @@
                         <!-- Bring in custom Modules -->
                         <moduleDependency>
                             <groupId>${project.groupId}</groupId>
-                            <artifactId>beecon2017-share-jar</artifactId>
+                            <artifactId>easyContent2Metadata-share-jar</artifactId>
                             <version>${project.version}</version>
                         </moduleDependency>
                     </shareModules>
@@ -410,8 +410,8 @@
         </pluginRepository>
     </pluginRepositories>
   <modules>
-    <module>beecon2017-platform-jar</module>
-    <module>beecon2017-share-jar</module>
+    <module>easyContent2Metadata-platform-jar</module>
+    <module>easyContent2Metadata-share-jar</module>
     <module>integration-tests</module>
   </modules>
 </project>

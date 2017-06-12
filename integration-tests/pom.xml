@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>integration-tests</artifactId>
@@ -9,9 +9,9 @@
                                             nothing is compiled (i.e. you cannot set it to pom) -->
 
     <parent>
-        <groupId>com.mimacom.alfresco</groupId>
-        <artifactId>beecon2017</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <groupId>org.alfresco.extension.ec2m</groupId>
+        <artifactId>easyContent2Metadata</artifactId>
+        <version>0.1-SNAPSHOT</version>
     </parent>
 
     <properties>
@@ -21,9 +21,9 @@
         <!-- Bring in any custom module that should be tested, by default we bring in the Platform JAR module
              that is generated for the AIO project -->
         <dependency>
-            <groupId>com.mimacom.alfresco</groupId>
-            <artifactId>beecon2017-platform-jar</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>org.alfresco.extension.ec2m</groupId>
+            <artifactId>easyContent2Metadata-platform-jar</artifactId>
+            <version>0.1-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
 
