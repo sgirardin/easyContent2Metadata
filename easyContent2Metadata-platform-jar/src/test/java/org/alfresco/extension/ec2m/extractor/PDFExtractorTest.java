@@ -42,24 +42,24 @@ public class PDFExtractorTest{
     @Test
     public void testPlaceByCoordinate(){
         //Given
-        Rectangle authorMetaDataZone = new Rectangle(350, 70, 300,20);
+        Rectangle placeMetaDataZone = new Rectangle(350, 70, 300,20);
 
         //When
-        String placeOfDocument = pdfExtractor.extractMetaDataFieldByCoordinate(pdfFileStream, authorMetaDataZone);
+        String placeDocument = pdfExtractor.extractMetaDataFieldByCoordinate(pdfFileStream, placeMetaDataZone);
         //Then
-        Assert.assertEquals("Returning not the same Value","Zaragoza", placeOfDocument.trim());
+        Assert.assertEquals("Returning not the same Value","Zaragoza", placeDocument.trim());
 
     }
 
     @Test
     public void testDateByCoordinate(){
         //Given
-        Rectangle authorMetaDataZone = new Rectangle(350, 90, 300,20);
+        Rectangle dateMetaDataZone = new Rectangle(350, 90, 300,20);
 
         //When
-        String placeOfDocument= pdfExtractor.extractMetaDataFieldByCoordinate(pdfFileStream, authorMetaDataZone);
+        String dateOfDocument= pdfExtractor.extractMetaDataFieldByCoordinate(pdfFileStream, dateMetaDataZone);
         //Then
-        Assert.assertEquals("Returning not the same Value","25-04-2017", placeOfDocument.trim());
+        Assert.assertEquals("Returning not the same Value","25-04-2017", dateOfDocument.trim());
 
     }
 
@@ -69,9 +69,9 @@ public class PDFExtractorTest{
         String dateRegex = "\\d{2}(\\.|-)\\d{2}(\\.|-)\\d{4}";
 
         //When
-        String placeOfDocument= pdfExtractor.extractMetaDataFieldByRegex(pdfFileStream, dateRegex);
+        String dateOfDocument= pdfExtractor.extractMetaDataFieldByRegex(pdfFileStream, dateRegex);
         //Then
-        Assert.assertEquals("Returning not the same Value","25-04-2017", placeOfDocument.trim());
+        Assert.assertEquals("Returning not the same Value","25-04-2017", dateOfDocument.trim());
 
     }
 
