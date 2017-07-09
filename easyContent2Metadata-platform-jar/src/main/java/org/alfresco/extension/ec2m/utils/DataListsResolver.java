@@ -20,43 +20,42 @@ public class DataListsResolver {
 	private StoreRef storeRef = new StoreRef(StoreRef.PROTOCOL_WORKSPACE, "SpacesStore");
 
 	public Map<String, String> getValuesByType(String type) throws Exception {
-		return getMappingsByConfigurationAndType(type, ConfigurationsEnum.VALUE.toString());
+		List<NodeRef> datalistValues = getExtractorDatalist();
+		return getMappingsByConfigurationAndType(datalistValues, ConfigurationEnum.VALUE);
 	}
 
 	public Map<String, String> getRegexByType(String type) throws Exception {
-		return getMappingsByConfigurationAndType(type, ConfigurationsEnum.REGEX.toString());
+		List<NodeRef> datalistValues = getExtractorDatalist();
+		return getMappingsByConfigurationAndType(datalistValues, ConfigurationEnum.REGEX);
 	}
 
 	public Map<String, String> getCoordinatesByType(String type) throws Exception {
-		return getMappingsByConfigurationAndType(type, ConfigurationsEnum.COORDINATES.toString());
+		List<NodeRef> datalistValues = getExtractorDatalist();
+		return getMappingsByConfigurationAndType(datalistValues, ConfigurationEnum.COORDINATES);
 	}
 
-	public Map<String, String> getMappingsByConfigurationAndType(String type, String configuration){
+	public Map<String, String> getMappingsByConfigurationAndType(List<NodeRef> datalistValues, ConfigurationEnum wantedConfiguration){
 		Map<String, String> mapConfType = new HashMap<>();
-		List<NodeRef> datalistValues = getExtractorDatalist();
-		String typeStr, configurationStr;
-		for (NodeRef nodeRef : datalistValues){
-			typeStr = nodeService.getProperty(nodeRef, Constants.PROP_TYPE).toString();
-			configurationStr = nodeService.getProperty(nodeRef, Constants.PROP_CONFIGURATION).toString();
-			if (typeStr != null && configurationStr != null){
-				mapConfType.put(nodeService.getProperty(nodeRef, Constants.PROP_PROPERTY).toString(), nodeService.getProperty(nodeRef, Constants.PROP_VALUE).toString());
+		for (NodeRef extractionDataInformationNode : datalistValues){
+			if (fieldNeedsExtraction(extractionDataInformationNode, wantedConfiguration)){
+				mapConfType.put(nodeService.getProperty(extractionDataInformationNode, Constants.PROP_PROPERTY).toString(),
+						nodeService.getProperty(extractionDataInformationNode, Constants.PROP_VALUE).toString());
 			}
 		}
-
 		return mapConfType;
 	}
 
-	public boolean hasMappings(String type){
+	public boolean hasMappings(String documentModel){
 		List<NodeRef> datalistValues = getExtractorDatalist();
 		for (NodeRef nodeRef : datalistValues) {
-			if (nodeService.getProperty(nodeRef, Constants.PROP_TYPE).equals(type)) {
+			if (nodeService.getProperty(nodeRef, Constants.PROP_TYPE).equals(documentModel)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public List<NodeRef> getExtractorDatalist(){
+	private List<NodeRef> getExtractorDatalist(){
 		String query ="TYPE:\""+ Constants.EXTRACTOR_MAPPING_TYPE_LIST +"\"";
 		ResultSet rs = searchService.query(storeRef, SearchService.LANGUAGE_LUCENE, query);
 
@@ -66,7 +65,17 @@ public class DataListsResolver {
 		return result;
 	}
 
-	
+	protected boolean fieldNeedsExtraction(NodeRef extractionDataInformationNode, ConfigurationEnum wantedConfiguration){
+		String givenNodeType = nodeService.getProperty(extractionDataInformationNode, Constants.PROP_TYPE).toString();
+		ConfigurationEnum givenNodeConfiguration = ConfigurationEnum.valueOf(nodeService.getProperty(extractionDataInformationNode, Constants.PROP_CONFIGURATION).toString());
+
+		boolean isActive =  Boolean.valueOf(nodeService.getProperty(extractionDataInformationNode, Constants.ASPECT_ACTIVE).toString());
+		boolean isSameConfiguration = wantedConfiguration.equals(givenNodeConfiguration);
+
+		return isActive && givenNodeType != null && isSameConfiguration;
+	}
+
+
 	public void setSearchService(SearchService searchService) {
 		this.searchService = searchService;
 	}
