@@ -8,7 +8,7 @@
 		 workflow, and loading custom content models.  -->
 
     <!-- Registration of new models -->
-    <bean id="beecon2017-platform-jar.dictionaryBootstrap" parent="dictionaryModelBootstrap" depends-on="dictionaryBootstrap">
+    <bean id="easyContent2Metadata-platform-jar.dictionaryBootstrap" parent="dictionaryModelBootstrap" depends-on="dictionaryBootstrap">
         <property name="models">
             <list>
                 <value>alfresco/module/${project.artifactId}/model/content-model.xml</value>

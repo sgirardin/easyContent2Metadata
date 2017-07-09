@@ -14,11 +14,11 @@
    -->
 
    <!-- Add module specific messages and labels -->
-   <bean id="com.mimacom.alfresco.beecon2017-share-jar.resources"
+   <bean id="com.mimacom.alfresco.easyContent2Metadata-share-jar.resources"
          class="org.springframework.extensions.surf.util.ResourceBundleBootstrapComponent">
       <property name="resourceBundles">
          <list>
-            <value>alfresco.web-extension.messages.beecon2017-share-jar</value>
+            <value>alfresco.web-extension.messages.easyContent2Metadata-share-jar</value>
          </list>
       </property>
    </bean>
