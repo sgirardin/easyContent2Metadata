@@ -26,10 +26,6 @@
         -->
 
     <types>
-        <!--
-            EM Enterprise-wide Document root type.
-            All other custom document types would extend this one.
-        -->
         <type name="ec2m:easyContent2MetadataDocument">
             <title>EasyContent2Metadata Document Type Example</title>
             <parent>cm:content</parent>

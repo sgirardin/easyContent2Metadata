@@ -1,7 +1,7 @@
 package org.alfresco.extension.ec2m.fillMetadata;
 
 import org.alfresco.extension.ec2m.extractor.Extractor;
-import org.alfresco.extension.ec2m.utils.ConfigurationsEnum;
+import org.alfresco.extension.ec2m.utils.ConfigurationEnum;
 import org.alfresco.extension.ec2m.utils.Constants;
 import org.alfresco.extension.ec2m.utils.DataListsResolver;
 import org.alfresco.model.ContentModel;
@@ -31,8 +31,7 @@ import java.util.Map;
 public class FillMetadataBehaviour
         implements NodeServicePolicies.OnCreateNodePolicy,
         ContentServicePolicies.OnContentUpdatePolicy,
-        NodeServicePolicies.OnSetNodeTypePolicy
-{
+        NodeServicePolicies.OnSetNodeTypePolicy {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
@@ -85,44 +84,44 @@ public class FillMetadataBehaviour
     }
 
 
-    private void doBehaviourAction(NodeRef nodeRef){
+    private void doBehaviourAction(NodeRef nodeRef) {
         String nodeType = this.nodeService.getType(nodeRef).toString();
         if (StringUtils.hasText(nodeType)) {
             try {
                 Map<QName, Serializable> nodeProperties = this.nodeService.getProperties(nodeRef);
 
                 // Extract Coordinates
-                nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getCoordinatesByType(nodeType), ConfigurationsEnum.COORDINATES));
+                nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getCoordinatesByType(nodeType), ConfigurationEnum.COORDINATES));
 
                 // Extract Regex
-                nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getRegexByType(nodeType), ConfigurationsEnum.REGEX));
+                nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getRegexByType(nodeType), ConfigurationEnum.REGEX));
 
                 // Extract Constants
-                //nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getValuesByType(nodeType), ConfigurationsEnum.VALUE));
+                //nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getValuesByType(nodeType), ConfigurationEnum.VALUE));
 
                 if (nodeProperties.size() > 0) {
                     this.nodeService.setProperties(nodeRef, nodeProperties);
                 }
 
             } catch (Exception e) {
-                logger.error(e.getMessage());
+                logger.error(e.getMessage(),e);
             }
         }
     }
 
-    private Map<QName, Serializable> extractMapValues(NodeRef nodeRef, Map<String, String> toMap, ConfigurationsEnum configurationType){
+    private Map<QName, Serializable> extractMapValues(NodeRef nodeRef, Map<String, String> toMap, ConfigurationEnum configurationType) {
         String value;
         //TODO Not reload all properties SIGI 27.04.2017
         Map<QName, Serializable> extractorValues = new HashMap<>();
         for (Map.Entry<String, String> entry : toMap.entrySet()) {
-            switch (configurationType){
+            switch (configurationType) {
                 case COORDINATES:
                     String[] coordinates = entry.getValue().split(",");
-                    Rectangle selectionZone = transformToRectanlge(coordinates[0], coordinates[1], coordinates[2], coordinates[3]);
+                    Rectangle selectionZone = transformToRectanlge(coordinates[0].trim(), coordinates[1].trim(), coordinates[2].trim(), coordinates[3].trim());
                     value = extractor.extractMetaDataFieldByCoordinate(getInputStream(nodeRef), selectionZone);
 
-                    String textCleanup = value.replace("\t"," ");
-                    logger.error("Metadata value: " + textCleanup + " at: " + selectionZone.toString() +" on field " + entry.getKey());
+                    String textCleanup = value.replace("\t", " ");
+                    logger.error("Metadata value: " + textCleanup + " at: " + selectionZone.toString() + " on field " + entry.getKey());
                     if (StringUtils.hasText(textCleanup)) {
                         extractorValues.put(QName.createQName(entry.getKey()), textCleanup);
                     }
@@ -141,14 +140,13 @@ public class FillMetadataBehaviour
         return extractorValues;
     }
 
-    private InputStream getInputStream(NodeRef nodeRef){
+    private InputStream getInputStream(NodeRef nodeRef) {
         return contentService.getReader(nodeRef, ContentModel.PROP_CONTENT).getContentInputStream();
     }
 
-    private Rectangle transformToRectanlge(String x1, String y1, String x2, String y2){
+    private Rectangle transformToRectanlge(String x1, String y1, String x2, String y2) {
         return new Rectangle(Integer.parseInt(x1), Integer.parseInt(y1), Integer.parseInt(x2) - Integer.parseInt(x1), Integer.parseInt(y2) - Integer.parseInt(y1));
     }
-
 
     public void setNodeService(NodeService nodeService) {
         this.nodeService = nodeService;
