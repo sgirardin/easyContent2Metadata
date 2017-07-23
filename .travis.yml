@@ -4,6 +4,9 @@ install: true
 addons:
   sonarqube:
     organization: "sgirardin-github"
+    branches:
+          - master
+          - feature/*
 jdk:
   - oraclejdk8
 script:
