@@ -24,10 +24,9 @@ public class PDFExtractor implements Extractor{
 
     @Override
     public String extractMetaDataFieldByCoordinate(InputStream documentStream, Rectangle searchArea){
-        PDDocument pdfDocument = null;
+
         String metadataValue = "";
-        try {
-            pdfDocument = PDDocument.load(documentStream);
+        try (PDDocument pdfDocument = PDDocument.load(documentStream)){
 
             PDFTextStripperByArea stripper = new PDFTextStripperByArea();
             stripper.setSortByPosition( true );
@@ -38,53 +37,32 @@ public class PDFExtractor implements Extractor{
 
             metadataValue = stripper.getTextForRegion( METADATA_REGION).trim();
 
-            logger.info("Extracted metadata: "+ metadataValue +" at: " + searchArea.toString());
+            logger.info("Extracted coordinate metadata: {} at: {}",metadataValue, searchArea.toString());
 
         } catch (IOException exception){
-            logger.error("Issue extracting metadata");
-        } finally {
-            if( pdfDocument != null )
-            {
-                try {
-                    pdfDocument.close();
-                }  catch (IOException e){
-                    logger.info("Error closing Stream");
-                }
-            }
+            logger.error("Issue extracting metadata with coordinate: {}", searchArea.toString());
         }
 
         return metadataValue;
     }
 
     @Override
-    public String extractMetaDataFieldByRegex(InputStream documentStream, String regex){
-        PDDocument pdfDocument = null;
+    public String extractMetaDataFieldByRegex(InputStream documentStream, String regex) {
         String metadataValue = "";
-        try {
-            pdfDocument = PDDocument.load(documentStream);
+        try (PDDocument pdfDocument = PDDocument.load(documentStream)) {
 
             PDFTextStripper stripper = new PDFTextStripper();
             String pdfDocumentString = stripper.getText(pdfDocument);
 
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(pdfDocumentString);
-            if (matcher.find())
-            {
+            if (matcher.find()) {
                 metadataValue = matcher.group(0);
             }
 
-            logger.info("Extracted metadata: "+ metadataValue +" for: " + regex);
-        } catch (IOException exception){
-            logger.error("Issue extracting metadata");
-        } finally {
-            if( pdfDocument != null )
-            {
-                try {
-                    pdfDocument.close();
-                }  catch (IOException e){
-                    logger.info("Error closing Stream");
-                }
-            }
+            logger.info("Extracted regex metadata: {} at: {}",metadataValue, regex);
+        } catch (IOException exception) {
+            logger.error("Issue extracting metadata with regex: {} ", regex);
         }
         return metadataValue;
     }
