@@ -11,7 +11,7 @@
 
     <bean id="PDFExtractor" class="org.alfresco.extension.ec2m.extractor.PDFExtractor" />
 
-    <bean id="com.mimacom.alfresco.fillmetadata.FillMetadataBehaviour" class="org.alfresco.extension.ec2m.fillMetadata.FillMetadataBehaviour"
+    <bean id="com.mimacom.alfresco.fillmetadata.FillMetadataBehaviour" class="org.alfresco.extension.ec2m.filler.FillMetadataBehaviour"
           init-method="init">
         <property name="policyComponent" ref="policyComponent" />
         <property name="nodeService" ref="nodeService" />

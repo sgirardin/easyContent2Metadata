@@ -1,4 +1,4 @@
-package org.alfresco.extension.ec2m.fillMetadata;
+package org.alfresco.extension.ec2m.filler;
 
 import org.alfresco.extension.ec2m.extractor.Extractor;
 import org.alfresco.extension.ec2m.utils.ConfigurationEnum;
@@ -144,7 +144,7 @@ public class FillMetadataBehaviour
         return contentService.getReader(nodeRef, ContentModel.PROP_CONTENT).getContentInputStream();
     }
 
-    private Rectangle transformToRectanlge(String x1, String y1, String x2, String y2) {
+    protected Rectangle transformToRectanlge(String x1, String y1, String x2, String y2) {
         return new Rectangle(Integer.parseInt(x1), Integer.parseInt(y1), Integer.parseInt(x2) - Integer.parseInt(x1), Integer.parseInt(y2) - Integer.parseInt(y1));
     }
 
