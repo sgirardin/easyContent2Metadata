@@ -37,7 +37,7 @@ public class PDFExtractor implements Extractor{
 
             metadataValue = stripper.getTextForRegion( METADATA_REGION).trim();
 
-            logger.info("Extracted coordinate metadata: {} at: {}",metadataValue, searchArea.toString());
+            logger.info("Extracted coordinate metadata: {} at: {}",metadataValue, searchArea);
 
         } catch (IOException exception){
             logger.error("Issue extracting metadata with coordinate: {}", searchArea.toString());
