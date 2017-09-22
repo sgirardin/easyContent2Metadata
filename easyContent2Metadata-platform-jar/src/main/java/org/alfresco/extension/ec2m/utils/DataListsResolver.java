@@ -19,17 +19,17 @@ public class DataListsResolver {
 	private NodeService nodeService;
 	private StoreRef storeRef = new StoreRef(StoreRef.PROTOCOL_WORKSPACE, "SpacesStore");
 
-	public Map<String, String> getValuesByType(String type) throws Exception {
+	public Map<String, String> getValuesByType() throws Exception {
 		List<NodeRef> datalistValues = getExtractorDatalist();
 		return getMappingsByConfigurationAndType(datalistValues, ConfigurationEnum.VALUE);
 	}
 
-	public Map<String, String> getRegexByType(String type) throws Exception {
+	public Map<String, String> getRegexByType() throws Exception {
 		List<NodeRef> datalistValues = getExtractorDatalist();
 		return getMappingsByConfigurationAndType(datalistValues, ConfigurationEnum.REGEX);
 	}
 
-	public Map<String, String> getCoordinatesByType(String type) throws Exception {
+	public Map<String, String> getCoordinatesByType() throws Exception {
 		List<NodeRef> datalistValues = getExtractorDatalist();
 		return getMappingsByConfigurationAndType(datalistValues, ConfigurationEnum.COORDINATES);
 	}
@@ -72,7 +72,7 @@ public class DataListsResolver {
 		boolean isActive =  Boolean.valueOf(nodeService.getProperty(extractionDataInformationNode, Constants.ASPECT_ACTIVE).toString());
 		boolean isSameConfiguration = wantedConfiguration.equals(givenNodeConfiguration);
 
-		return isActive && givenNodeType != null && isSameConfiguration;
+		return isActive && isSameConfiguration && givenNodeType != null ;
 	}
 
 

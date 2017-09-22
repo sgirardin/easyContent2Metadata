@@ -64,7 +64,7 @@ public class PDFExtractorTest{
     }
 
     @Test
-    public void testDateByRegex(){
+    public void testDateByRegexFound(){
         //Given
         String dateRegex = "\\d{2}(\\.|-)\\d{2}(\\.|-)\\d{4}";
 
@@ -72,6 +72,18 @@ public class PDFExtractorTest{
         String dateOfDocument= pdfExtractor.extractMetaDataFieldByRegex(pdfFileStream, dateRegex);
         //Then
         Assert.assertEquals("Returning not the same Value","25-04-2017", dateOfDocument.trim());
+
+    }
+
+    @Test
+    public void testDateByRegexNotFound(){
+        //Given
+        String dateRegex = "\\d{1}(\\.|-)\\d{3}(\\.|-)\\d{4}";
+
+        //When
+        String dateOfDocument= pdfExtractor.extractMetaDataFieldByRegex(pdfFileStream, dateRegex);
+        //Then
+        Assert.assertEquals("Returning not the same Value","", dateOfDocument.trim());
 
     }
 

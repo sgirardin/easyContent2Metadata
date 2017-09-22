@@ -85,27 +85,24 @@ public class FillMetadataBehaviour
 
 
     private void doBehaviourAction(NodeRef nodeRef) {
-        String nodeType = this.nodeService.getType(nodeRef).toString();
-        if (StringUtils.hasText(nodeType)) {
-            try {
-                Map<QName, Serializable> nodeProperties = this.nodeService.getProperties(nodeRef);
+        try {
+            Map<QName, Serializable> nodeProperties = this.nodeService.getProperties(nodeRef);
 
-                // Extract Coordinates
-                nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getCoordinatesByType(nodeType), ConfigurationEnum.COORDINATES));
+            // Extract Coordinates
+            nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getCoordinatesByType(), ConfigurationEnum.COORDINATES));
 
-                // Extract Regex
-                nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getRegexByType(nodeType), ConfigurationEnum.REGEX));
+            // Extract Regex
+            nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getRegexByType(), ConfigurationEnum.REGEX));
 
-                // Extract Constants
-                //nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getValuesByType(nodeType), ConfigurationEnum.VALUE));
+            // Extract Constants
+            //nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getValuesByType(), ConfigurationEnum.VALUE));
 
-                if (nodeProperties.size() > 0) {
-                    this.nodeService.setProperties(nodeRef, nodeProperties);
-                }
-
-            } catch (Exception e) {
-                logger.error(e.getMessage(),e);
+            if (nodeProperties.size() > 0) {
+                this.nodeService.setProperties(nodeRef, nodeProperties);
             }
+
+        } catch (Exception e) {
+            logger.error(e.getMessage(),e);
         }
     }
 
@@ -140,12 +137,12 @@ public class FillMetadataBehaviour
         return extractorValues;
     }
 
-    private InputStream getInputStream(NodeRef nodeRef) {
-        return contentService.getReader(nodeRef, ContentModel.PROP_CONTENT).getContentInputStream();
-    }
-
     protected Rectangle transformToRectanlge(String x1, String y1, String x2, String y2) {
         return new Rectangle(Integer.parseInt(x1), Integer.parseInt(y1), Integer.parseInt(x2) - Integer.parseInt(x1), Integer.parseInt(y2) - Integer.parseInt(y1));
+    }
+
+    private InputStream getInputStream(NodeRef nodeRef) {
+        return contentService.getReader(nodeRef, ContentModel.PROP_CONTENT).getContentInputStream();
     }
 
     public void setNodeService(NodeService nodeService) {
