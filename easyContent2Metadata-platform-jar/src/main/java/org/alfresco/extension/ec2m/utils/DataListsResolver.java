@@ -23,17 +23,17 @@ public class DataListsResolver {
 	private NodeService nodeService;
 	private StoreRef storeRef = new StoreRef(StoreRef.PROTOCOL_WORKSPACE, "SpacesStore");
 
-	public Map<String, String> getValuesByType(NodeRef documentToExtractMetadata) throws Exception {
+	public Map<String, String> getValuesByType(NodeRef documentToExtractMetadata){
 		List<NodeRef> datalistValues = getExtractorDatalist();
 		return getMappingsByConfigurationAndType(datalistValues, documentToExtractMetadata, ConfigurationEnum.VALUE);
 	}
 
-	public Map<String, String> getRegexByType(NodeRef documentToExtractMetadata) throws Exception {
+	public Map<String, String> getRegexByType(NodeRef documentToExtractMetadata){
 		List<NodeRef> datalistValues = getExtractorDatalist();
 		return getMappingsByConfigurationAndType(datalistValues, documentToExtractMetadata, ConfigurationEnum.REGEX);
 	}
 
-	public Map<String, String> getCoordinatesByType(NodeRef documentToExtractMetadata) throws Exception {
+	public Map<String, String> getCoordinatesByType(NodeRef documentToExtractMetadata){
 		List<NodeRef> datalistValues = getExtractorDatalist();
 		return getMappingsByConfigurationAndType(datalistValues, documentToExtractMetadata,ConfigurationEnum.COORDINATES);
 	}
@@ -97,8 +97,7 @@ public class DataListsResolver {
 	}
 
 	protected boolean isMetaDataExtractionActive(NodeRef extractionDataInformationNode){
-		boolean isActive = Boolean.valueOf(nodeService.getProperty(extractionDataInformationNode, Constants.ASPECT_ACTIVE).toString());
-		return isActive;
+		return Boolean.valueOf(nodeService.getProperty(extractionDataInformationNode, Constants.ASPECT_ACTIVE).toString());
 	}
 
 

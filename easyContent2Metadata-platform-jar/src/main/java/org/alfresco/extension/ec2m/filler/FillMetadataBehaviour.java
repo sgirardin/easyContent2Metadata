@@ -118,7 +118,7 @@ public class FillMetadataBehaviour
                     value = extractor.extractMetaDataFieldByCoordinate(getInputStream(nodeRef), selectionZone);
 
                     String textCleanup = value.replace("\t", " ");
-                    logger.error("Metadata value: " + textCleanup + " at: " + selectionZone.toString() + " on field " + metadataInfoLine.getKey());
+                    logger.error("Metadata value: {} at: {} on field {}",textCleanup,selectionZone.toString(), metadataInfoLine.getKey());
                     if (StringUtils.hasText(textCleanup)) {
                         extractorValues.put(QName.createQName(metadataInfoLine.getKey()), textCleanup);
                     }
