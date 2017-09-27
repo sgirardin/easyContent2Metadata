@@ -15,15 +15,6 @@
     <properties>
     </properties>
 
-    <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
-        <dependency>
-            <groupId>org.apache.pdfbox</groupId>
-            <artifactId>pdfbox</artifactId>
-            <version>1.8.10</version>
-        </dependency>
-    </dependencies>
-
     <build>
         <plugins>
             <plugin>
