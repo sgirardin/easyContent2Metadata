@@ -5,12 +5,16 @@ import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchService;
+import org.alfresco.service.namespace.QName;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.alfresco.events.types.DataType.Qname;
 
 public class DataListsResolver {
 
@@ -19,25 +23,25 @@ public class DataListsResolver {
 	private NodeService nodeService;
 	private StoreRef storeRef = new StoreRef(StoreRef.PROTOCOL_WORKSPACE, "SpacesStore");
 
-	public Map<String, String> getValuesByType() throws Exception {
+	public Map<String, String> getValuesByType(NodeRef documentToExtractMetadata){
 		List<NodeRef> datalistValues = getExtractorDatalist();
-		return getMappingsByConfigurationAndType(datalistValues, ConfigurationEnum.VALUE);
+		return getMappingsByConfigurationAndType(datalistValues, documentToExtractMetadata, ConfigurationEnum.VALUE);
 	}
 
-	public Map<String, String> getRegexByType() throws Exception {
+	public Map<String, String> getRegexByType(NodeRef documentToExtractMetadata){
 		List<NodeRef> datalistValues = getExtractorDatalist();
-		return getMappingsByConfigurationAndType(datalistValues, ConfigurationEnum.REGEX);
+		return getMappingsByConfigurationAndType(datalistValues, documentToExtractMetadata, ConfigurationEnum.REGEX);
 	}
 
-	public Map<String, String> getCoordinatesByType() throws Exception {
+	public Map<String, String> getCoordinatesByType(NodeRef documentToExtractMetadata){
 		List<NodeRef> datalistValues = getExtractorDatalist();
-		return getMappingsByConfigurationAndType(datalistValues, ConfigurationEnum.COORDINATES);
+		return getMappingsByConfigurationAndType(datalistValues, documentToExtractMetadata,ConfigurationEnum.COORDINATES);
 	}
 
-	public Map<String, String> getMappingsByConfigurationAndType(List<NodeRef> datalistValues, ConfigurationEnum wantedConfiguration){
+	public Map<String, String> getMappingsByConfigurationAndType(List<NodeRef> datalistValues, NodeRef documentToExtractMetadata,ConfigurationEnum wantedConfiguration){
 		Map<String, String> mapConfType = new HashMap<>();
 		for (NodeRef extractionDataInformationNode : datalistValues){
-			if (fieldNeedsExtraction(extractionDataInformationNode, wantedConfiguration)){
+			if (fieldNeedsExtraction(extractionDataInformationNode, documentToExtractMetadata, wantedConfiguration)){
 				mapConfType.put(nodeService.getProperty(extractionDataInformationNode, Constants.PROP_PROPERTY).toString(),
 						nodeService.getProperty(extractionDataInformationNode, Constants.PROP_VALUE).toString());
 			}
@@ -65,14 +69,35 @@ public class DataListsResolver {
 		return result;
 	}
 
-	protected boolean fieldNeedsExtraction(NodeRef extractionDataInformationNode, ConfigurationEnum wantedConfiguration){
+	protected boolean fieldNeedsExtraction(NodeRef extractionDataInformationNode, NodeRef documentToExtractMetadata, ConfigurationEnum wantedConfiguration){
+
+		boolean isExtractionActive = isMetaDataExtractionActive(extractionDataInformationNode);
+		boolean isSameConfiguration = isSameConfiguration(extractionDataInformationNode, wantedConfiguration);
+		boolean isTypeValid = isTypeValid(extractionDataInformationNode, documentToExtractMetadata);
+
+		return isExtractionActive && isSameConfiguration && isTypeValid ;
+	}
+
+	protected boolean isTypeValid(NodeRef extractionDataInformationNode, NodeRef documentToExtractMetadata){
 		String givenNodeType = nodeService.getProperty(extractionDataInformationNode, Constants.PROP_TYPE).toString();
+
+		boolean isValid = false;
+		if(StringUtils.isNotBlank(givenNodeType)) {
+			QName givenNodeTypeQname = QName.createQName(givenNodeType);
+			if (nodeService.getType(documentToExtractMetadata).equals(givenNodeTypeQname)){
+				return true;
+			}
+		}
+		return isValid;
+	}
+
+	protected boolean isSameConfiguration(NodeRef extractionDataInformationNode, ConfigurationEnum wantedConfiguration){
 		ConfigurationEnum givenNodeConfiguration = ConfigurationEnum.valueOf(nodeService.getProperty(extractionDataInformationNode, Constants.PROP_CONFIGURATION).toString());
+		return wantedConfiguration.equals(givenNodeConfiguration);
+	}
 
-		boolean isActive =  Boolean.valueOf(nodeService.getProperty(extractionDataInformationNode, Constants.ASPECT_ACTIVE).toString());
-		boolean isSameConfiguration = wantedConfiguration.equals(givenNodeConfiguration);
-
-		return isActive && isSameConfiguration && givenNodeType != null ;
+	protected boolean isMetaDataExtractionActive(NodeRef extractionDataInformationNode){
+		return Boolean.valueOf(nodeService.getProperty(extractionDataInformationNode, Constants.ASPECT_ACTIVE).toString());
 	}
 
 
