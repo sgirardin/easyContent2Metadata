@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view:view xmlns:view="http://www.alfresco.org/view/repository/1.0"
+           xmlns:cm="http://www.alfresco.org/model/content/1.0">
+
+    <view:reference view:pathref="${system.authorities_container.childname}/cm:GROUP_site_metadata-extraction-information_SiteManager">
+        <view:associations>
+            <cm:member>
+                <view:reference view:pathref="${system.people_container.childname}/cm:admin"
+                                view:childName="cm:admin" />
+            </cm:member>
+        </view:associations>
+    </view:reference>
+</view:view>

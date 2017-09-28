@@ -25,15 +25,80 @@
         </property>
     </bean>
 
-    <bean id="com.mimacom.alfresco.sampleprocess.workflowBootstrap" parent="workflowDeployer">
-        <property name="workflowDefinitions">
+    <!-- Load Groups -->
+    <bean id="org.alfresco.bootstrap.patch.groupsLoader"
+          class="org.alfresco.repo.admin.patch.impl.GenericBootstrapPatch"
+          parent="basePatch" >
+        <property name="id"><value>org.alfresco.bootstrap.patch.groupsLoader</value></property>
+        <property name="description"><value>org.alfresco.bootstrap.patch.groupsLoader.description</value></property>
+        <property name="fixesFromSchema"><value>0</value></property>
+        <property name="fixesToSchema"><value>${version.schema}</value></property>
+        <property name="targetSchema"><value>10008</value></property>
+        <property name="importerBootstrap">
+            <ref bean="spacesBootstrap" />
+        </property>
+        <property name="bootstrapView">
+            <props>
+                <prop key="path">/${alfresco_user_store.system_container.childname}</prop>
+                <prop key="location">alfresco/module/${project.artifactId}/bootstrap/import-groups.xml</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- Load Group Memberships -->
+    <bean id="org.alfresco.bootstrap.patch.groupMembershipsLoader"
+          class="org.alfresco.repo.admin.patch.impl.GenericBootstrapPatch"
+          parent="basePatch" >
+        <property name="id"><value>org.alfresco.bootstrap.patch.groupMembershipsLoader</value></property>
+        <property name="description"><value>org.alfresco.bootstrap.patch.groupMembershipsLoader.description</value></property>
+        <property name="fixesFromSchema"><value>0</value></property>
+        <property name="fixesToSchema"><value>${version.schema}</value></property>
+        <property name="targetSchema"><value>10009</value></property>
+        <property name="dependsOn" >
             <list>
-                <props>
-                    <prop key="engineId">activiti</prop>
-                    <prop key="location">alfresco/module/${project.artifactId}/workflow/sample-process.bpmn20.xml</prop>
-                    <prop key="mimetype">text/xml</prop>
-                </props>
+                <ref bean="org.alfresco.bootstrap.patch.groupsLoader" />
             </list>
+        </property>
+        <property name="importerBootstrap">
+            <ref bean="spacesBootstrap" />
+        </property>
+        <property name="bootstrapView">
+            <props>
+                <prop key="path">/${system.system_container.childname}</prop>
+                <prop key="location">alfresco/module/${project.artifactId}/bootstrap/import-group-memberships.xml</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- Load Metadata Management Share Site -->
+    <bean id="org.alfresco.bootstrap.patch.metadataManagementDefaultSiteLoader"
+          class="org.alfresco.repo.admin.patch.impl.SiteLoadPatch" parent="basePatch">
+        <property name="id"><value>org.alfresco.bootstrap.patch.metadataManagementDefaultSiteLoader</value></property>
+        <property name="description"><value>org.alfresco.bootstrap.patch.metadataManagementDefaultSiteLoader</value></property>
+        <property name="fixesFromSchema"><value>0</value></property>
+        <property name="fixesToSchema"><value>${version.schema}</value></property>
+        <property name="targetSchema"><value>10010</value></property>
+        <property name="spacesBootstrap" ref="siteLoadBootstrap-Spaces"/>
+        <property name="usersBootstrap" ref="siteLoadBootstrap-Users"/>
+        <property name="siteService" ref="siteService"/>
+        <property name="authorityService" ref="authorityService"/>
+        <property name="behaviourFilter" ref="policyBehaviourFilter"/>
+        <property name="siteName">
+            <value>Metadata Extraction Management Site</value>
+        </property>
+        <property name="bootstrapViews">
+            <map>
+                <entry key="contents">
+                    <props>
+                        <prop key="location">alfresco/module/${project.artifactId}/bootstrap/metadataManagementDefaultSite.acp</prop>
+                    </props>
+                </entry>
+                <entry key="groups">
+                    <props>
+                        <prop key="location">alfresco/module/${project.artifactId}/bootstrap/metadataManagementDefaultSiteGroups.txt</prop>
+                    </props>
+                </entry>
+            </map>
         </property>
     </bean>
 </beans>
