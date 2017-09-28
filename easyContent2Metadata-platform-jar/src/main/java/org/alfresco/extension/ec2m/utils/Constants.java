@@ -7,6 +7,10 @@ import org.alfresco.service.namespace.QName;
  * Created by davidanton on 24/4/17.
  */
 public class Constants {
+
+    private Constants() {
+    }
+
     public static final String EXTRACTOR_MAPPING_TYPE_LIST = "ec2m:extractorMappingDatalist";
     public static final QName ON_CREATE_NODE = QName.createQName(NamespaceService.ALFRESCO_URI, "onCreateNode");
     public static final QName ON_UPDATE_CONTENT = QName.createQName(NamespaceService.ALFRESCO_URI, "onUpdateContent");

@@ -7,5 +7,5 @@ import org.alfresco.service.namespace.QName;
  */
 public class ConstantsForTests {
 
-    public static final QName TEST_CONTENT_MODEL          = QName.createQName(Constants.EXTRACTOR_MAPPING_MODEL, "easyContent2MetadataDocument");
+    public static final QName TEST_CONTENT_MODEL = QName.createQName(Constants.EXTRACTOR_MAPPING_MODEL, "easyContent2MetadataDocument");
 }

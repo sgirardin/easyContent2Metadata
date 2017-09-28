@@ -89,10 +89,10 @@ public class FillMetadataBehaviour
             Map<QName, Serializable> nodeProperties = this.nodeService.getProperties(nodeRef);
 
             // Extract Coordinates
-            nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getCoordinatesByType(), ConfigurationEnum.COORDINATES));
+            nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getCoordinatesByType(nodeRef), ConfigurationEnum.COORDINATES));
 
             // Extract Regex
-            nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getRegexByType(), ConfigurationEnum.REGEX));
+            nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getRegexByType(nodeRef), ConfigurationEnum.REGEX));
 
             // Extract Constants
             //nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getValuesByType(), ConfigurationEnum.VALUE));
@@ -106,31 +106,31 @@ public class FillMetadataBehaviour
         }
     }
 
-    private Map<QName, Serializable> extractMapValues(NodeRef nodeRef, Map<String, String> toMap, ConfigurationEnum configurationType) {
+    private Map<QName, Serializable> extractMapValues(NodeRef nodeRef, Map<String, String> metadataToExtract, ConfigurationEnum configurationType) {
         String value;
         //TODO Not reload all properties SIGI 27.04.2017
         Map<QName, Serializable> extractorValues = new HashMap<>();
-        for (Map.Entry<String, String> entry : toMap.entrySet()) {
+        for (Map.Entry<String, String> metadataInfoLine : metadataToExtract.entrySet()) {
             switch (configurationType) {
                 case COORDINATES:
-                    String[] coordinates = entry.getValue().split(",");
+                    String[] coordinates = metadataInfoLine.getValue().split(",");
                     Rectangle selectionZone = transformToRectanlge(coordinates[0].trim(), coordinates[1].trim(), coordinates[2].trim(), coordinates[3].trim());
                     value = extractor.extractMetaDataFieldByCoordinate(getInputStream(nodeRef), selectionZone);
 
                     String textCleanup = value.replace("\t", " ");
-                    logger.error("Metadata value: " + textCleanup + " at: " + selectionZone.toString() + " on field " + entry.getKey());
+                    logger.error("Metadata value: {} at: {} on field {}",textCleanup,selectionZone.toString(), metadataInfoLine.getKey());
                     if (StringUtils.hasText(textCleanup)) {
-                        extractorValues.put(QName.createQName(entry.getKey()), textCleanup);
+                        extractorValues.put(QName.createQName(metadataInfoLine.getKey()), textCleanup);
                     }
                     break;
                 case REGEX:
-                    value = extractor.extractMetaDataFieldByRegex(getInputStream(nodeRef), entry.getValue());
+                    value = extractor.extractMetaDataFieldByRegex(getInputStream(nodeRef), metadataInfoLine.getValue());
                     if (StringUtils.hasText(value)) {
-                        extractorValues.put(QName.createQName(entry.getKey()), value);
+                        extractorValues.put(QName.createQName(metadataInfoLine.getKey()), value);
                     }
                     break;
                 case VALUE:
-                    extractorValues.put(QName.createQName(entry.getKey()), entry.getValue());
+                    extractorValues.put(QName.createQName(metadataInfoLine.getKey()), metadataInfoLine.getValue());
                     break;
             }
         }
