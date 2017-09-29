@@ -24,6 +24,17 @@
     <!-- ===============================================================================================================
         Constraints, Types, and Aspects go here...
         -->
+    <constraints>
+        <constraint name="ec2m:configuration_types" type="LIST">
+            <parameter name="allowedValues">
+                <list>
+                    <value>COORDINATES</value>
+                    <value>REGEX</value>
+                    <value>VALUE</value>
+                </list>
+            </parameter>
+        </constraint>
+    </constraints>
 
     <types>
         <type name="ec2m:easyContent2MetadataDocument">
@@ -72,6 +83,10 @@
                     <type>d:text</type>
                     <mandatory>true</mandatory>
                     <multiple>false</multiple>
+                    <default>VALUE</default>
+                    <constraints>
+                        <constraint ref="ec2m:configuration_types" />
+                    </constraints>
                 </property>
                 <property name="ec2m:value">
                     <type>d:text</type>

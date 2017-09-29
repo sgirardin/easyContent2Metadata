@@ -11,17 +11,7 @@
      -->
 <alfresco-config>
 
-    <constraints>
-        <constraint name="em:configuration_types" type="LIST">
-            <parameter name="allowedValues">
-                <list>
-                    <value>COORDINATES</value>
-                    <value>REGEX</value>
-                    <value>VALUE</value>
-                </list>
-            </parameter>
-        </constraint>
-    </constraints>
+
 
     <!--================================================================================================================
         Make custom types and aspects visible in "Change Type" and "Manage Aspects" actions.
@@ -391,13 +381,7 @@
                 <appearance>
                     <field id="ec2m:type" mandatory="true" />
                     <field id="ec2m:property" mandatory="true" />
-                    <field id="ec2m:configuration" mandatory="true" >
-                        <type>d:text</type>
-                        <default>VALUE</default>
-                        <constraints>
-                            <constraint ref="ec2m:configuration_types" />
-                        </constraints>
-                    </field>
+                    <field id="ec2m:configuration" mandatory="true" />
                     <field id="ec2m:value" mandatory="true" />
                     <field id="ec2m:item_active" label-id="form.datalist.active.message" />
                 </appearance>
