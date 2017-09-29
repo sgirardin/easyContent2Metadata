@@ -24,6 +24,17 @@
     <!-- ===============================================================================================================
         Constraints, Types, and Aspects go here...
         -->
+    <constraints>
+        <constraint name="ec2m:configuration_types" type="LIST">
+            <parameter name="allowedValues">
+                <list>
+                    <value>COORDINATES</value>
+                    <value>REGEX</value>
+                    <value>VALUE</value>
+                </list>
+            </parameter>
+        </constraint>
+    </constraints>
 
     <types>
         <type name="ec2m:easyContent2MetadataDocument">
@@ -59,21 +70,29 @@
         <aspect name="ec2m:a_datalist">
             <properties>
                 <property name="ec2m:type">
+                    <title>Type</title>
                     <type>d:text</type>
                     <mandatory>true</mandatory>
                     <multiple>false</multiple>
                 </property>
                 <property name="ec2m:property">
+                    <title>Property</title>
                     <type>d:text</type>
                     <mandatory>true</mandatory>
                     <multiple>false</multiple>
                 </property>
                 <property name="ec2m:configuration">
+                    <title>Configuration</title>
                     <type>d:text</type>
                     <mandatory>true</mandatory>
                     <multiple>false</multiple>
+                    <default>VALUE</default>
+                    <constraints>
+                        <constraint ref="ec2m:configuration_types" />
+                    </constraints>
                 </property>
                 <property name="ec2m:value">
+                    <title>Value</title>
                     <type>d:text</type>
                     <mandatory>true</mandatory>
                     <multiple>false</multiple>
@@ -84,6 +103,7 @@
         <aspect name="ec2m:a_datalist_active">
             <properties>
                 <property name="ec2m:item_active">
+                    <title>Should the field be extracted?</title>
                     <type>d:boolean</type>
                     <default>true</default>
                 </property>

@@ -11,18 +11,6 @@
      -->
 <alfresco-config>
 
-    <constraints>
-        <constraint name="em:configuration_types" type="LIST">
-            <parameter name="allowedValues">
-                <list>
-                    <value>COORDINATES</value>
-                    <value>REGEX</value>
-                    <value>VALUE</value>
-                </list>
-            </parameter>
-        </constraint>
-    </constraints>
-
     <!--================================================================================================================
         Make custom types and aspects visible in "Change Type" and "Manage Aspects" actions.
          This will also make them visible when creating rules.
@@ -31,9 +19,7 @@
 
     <config evaluator="string-compare" condition="DocumentLibrary">
         <types>
-            <!-- Define the ACME base doc type as decedent from cm:content -->
             <type name="cm:content">
-                <subtype name="acme:document"/>
                 <subtype name="ec2m:easyContent2MetadataDocument"/>
             </type>
         </types>
@@ -211,10 +197,6 @@
                     <!-- tags and categories -->
                     <show id="cm:taggable" for-mode="edit" force="true"/>
                     <show id="cm:categories"/>
-
-                    <!-- ACME custom props -->
-                    <show id="acme:documentId" force="true"/>
-                    <show id="acme:securityClassification"/>
                 </field-visibility>
                 <edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl"/>
                 <appearance>
@@ -375,8 +357,6 @@
         </forms>
     </config>
 
-
-
     <config evaluator="model-type" condition="ec2m:extractorMappingDatalist">
         <forms>
             <form>
@@ -387,21 +367,22 @@
                     <show id="ec2m:value" />
                     <show id="ec2m:item_active" />
                 </field-visibility>
-                <create-form template="../data-lists/forms/dataitem.ftl" />
-                <appearance>
-                    <field id="ec2m:type" mandatory="true" />
-                    <field id="ec2m:property" mandatory="true" />
-                    <field id="ec2m:configuration" mandatory="true" >
-                        <type>d:text</type>
-                        <default>VALUE</default>
-                        <constraints>
-                            <constraint ref="ec2m:configuration_types" />
-                        </constraints>
-                    </field>
-                    <field id="ec2m:value" mandatory="true" />
-                    <field id="ec2m:item_active" label-id="form.datalist.active.message" />
-                </appearance>
             </form>
         </forms>
     </config>
+
+    <config evaluator="node-type" condition="ec2m:extractorMappingDatalist">
+        <forms>
+            <form>
+                <field-visibility>
+                    <show id="ec2m:type" />
+                    <show id="ec2m:property" />
+                    <show id="ec2m:configuration" />
+                    <show id="ec2m:value" />
+                    <show id="ec2m:item_active" />
+                </field-visibility>
+            </form>
+        </forms>
+    </config>
+
 </alfresco-config>
