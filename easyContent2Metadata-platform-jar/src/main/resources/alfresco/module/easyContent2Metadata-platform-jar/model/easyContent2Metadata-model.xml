@@ -54,6 +54,21 @@
                     <type>d:date</type>
                 </property>
             </properties>
+            <associations>
+                <child-association name="ec2m:images">
+                    <source>
+                        <mandatory>true</mandatory>
+                        <many>false</many>
+                    </source>
+                    <target>
+                        <class>cm:content</class>
+                        <mandatory>false</mandatory>
+                        <many>true</many>
+                    </target>
+                    <duplicate>false</duplicate>
+                    <propagateTimestamps>true</propagateTimestamps>
+                </child-association>
+            </associations>
         </type>
 
         <type name="ec2m:extractorMappingDatalist">

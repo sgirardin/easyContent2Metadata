@@ -10,19 +10,24 @@ import org.alfresco.repo.node.NodeServicePolicies;
 import org.alfresco.repo.policy.Behaviour;
 import org.alfresco.repo.policy.JavaBehaviour;
 import org.alfresco.repo.policy.PolicyComponent;
-import org.alfresco.service.cmr.repository.ChildAssociationRef;
-import org.alfresco.service.cmr.repository.ContentService;
-import org.alfresco.service.cmr.repository.NodeRef;
-import org.alfresco.service.cmr.repository.NodeService;
+import org.alfresco.service.cmr.model.FileFolderService;
+import org.alfresco.service.cmr.repository.*;
 import org.alfresco.service.namespace.QName;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDResources;
+import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import java.awt.*;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -37,6 +42,7 @@ public class FillMetadataBehaviour
 
     private NodeService nodeService;
     private ContentService contentService;
+    private FileFolderService fileFolderService;
 
     private PolicyComponent policyComponent;
 
@@ -97,12 +103,60 @@ public class FillMetadataBehaviour
             // Extract Constants
             //nodeProperties.putAll(extractMapValues(nodeRef, dataListsResolver.getValuesByType(), ConfigurationEnum.VALUE));
 
+            // Extract PDF Images
+            extractPdfImages(nodeRef);
+
             if (nodeProperties.size() > 0) {
                 this.nodeService.setProperties(nodeRef, nodeProperties);
             }
 
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
+        }
+    }
+
+    private void extractPdfImages(NodeRef nodeRef) throws IOException {
+        String destinationDir = "/Users/davidanton/Desktop/";
+        String fileName = (String) nodeService.getProperty(nodeRef, ContentModel.PROP_NAME);
+        ContentReader contentReader = contentService.getReader(nodeRef, ContentModel.PROP_CONTENT);
+        InputStream inputStream = contentReader.getContentInputStream();
+
+        PDDocument document = PDDocument.load(inputStream);
+        ArrayList<PDPage> list = (ArrayList<PDPage>) document.getDocumentCatalog().getAllPages();
+        int totalImages = 1;
+        boolean createdFolder = false;
+        for (PDPage page : list) {
+            PDResources pdResources = page.getResources();
+            Map pageImages = pdResources.getImages();
+            System.out.println("!!!!!!" + pageImages.size());
+            if (pageImages != null) {
+                Iterator imageIter = pageImages.keySet().iterator();
+                while (imageIter.hasNext()) {
+                    if (!createdFolder){
+                        fileFolderService.create(nodeService.getParentAssocs(nodeRef).get(0).getChildRef(), "images", ContentModel.TYPE_FOLDER);
+                    }
+                    String key = (String) imageIter.next();
+                    PDXObjectImage pdxObjectImage = (PDXObjectImage) pageImages.get(key);
+                    pdxObjectImage.write2file(destinationDir + fileName + "_" + totalImages);
+                    totalImages++;
+
+                    Map<QName, Serializable> props = new HashMap<>(1);
+                    props.put(ContentModel.PROP_NAME, fileName + "_" + totalImages);
+//                    NodeRef childNode = this.nodeService.createNode(
+//                           NodeRef childNode = this.nodeService.createNode(
+//                            nodeService.getParentAssocs(nodeRef),
+//                            ContentModel.ASSOC_CONTAINS,
+//                            QName.createQName(NamespaceService.CONTENT_MODEL_1_0_URI, name),
+//                            ContentModel.TYPE_CONTENT,
+//                            props).getChildRef();
+//                    Ch  nodeService.getParentAssocs(nodeRef),
+//                            ContentModel.ASSOC_CONTAINS,
+//                            QName.createQName(NamespaceService.CONTENT_MODEL_1_0_URI, name),
+//                            ContentModel.TYPE_CONTENT,
+//                            props).getChildRef();
+//                    ChildAssociationRef ref = nodeService.addChild(nodeRef, childNode, ContentModel.ASSOC_CONTAINS, destinationAssocQName);
+                }
+            }
         }
     }
 
