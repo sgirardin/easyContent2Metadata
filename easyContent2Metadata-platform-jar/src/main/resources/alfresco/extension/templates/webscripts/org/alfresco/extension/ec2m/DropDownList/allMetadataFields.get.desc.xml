@@ -1,0 +1,8 @@
+<webscript>
+    <shortname>Metadata Fields for passed QName</shortname>
+    <description>Retrieve all the Metadata Fields for passed QName</description>
+    <url>/e2cm/dropdownlist/retrieveallMetadataFields?qname={documentqname}</url>
+    <authentication>user</authentication>
+    <format default="html"></format>
+    <family>Easy Content 2 Metadata Module</family>
+</webscript>
