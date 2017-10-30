@@ -1,7 +1,7 @@
 <div class="form-field">
 
     <script type="text/javascript">//<![CDATA[
-    YAHOO.util.Event.onAvailable("${fieldHtmlId}_assign", function(){
+    YAHOO.util.Event.onAvailable("${fieldHtmlId}", function(){
         new selectAjax("${fieldHtmlId}");
     });
 
@@ -11,7 +11,7 @@
         this.register = function () {
 // Call webscript
             Alfresco.util.Ajax.jsonGet({
-                url: Alfresco.constants.PROXY_URI + "/e2cm/dropdownlist/retrieveallDocumentQName",
+                url: Alfresco.constants.PROXY_URI + "/e2cm/dropdownlist/retrieveallDocumentQNames",
                 successCallback: {
                     fn: this.updateOptions,
                     scope: this
@@ -32,7 +32,7 @@
                 selectDocumentQName.options[selectDocumentQName.options.length] = new Option("", "", true, true);
                 for (var i in documentQNames) {
                     var option = new Option(documentQNames[i].documentName, documentQNames[i].qname);
-                    selectDocumentQName.options[selectDocumentQName.options.length] = option;
+                    selectDocumentQName.options.add(option);
                 }
             }
         };
