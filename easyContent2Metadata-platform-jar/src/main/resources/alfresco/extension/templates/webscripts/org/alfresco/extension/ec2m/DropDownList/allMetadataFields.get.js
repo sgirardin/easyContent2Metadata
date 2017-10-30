@@ -1,4 +1,4 @@
-var documentQName = ${args.documentqname};
+var documentQName = args.qname;
 
 if (documentQName == null || documentQName == ""){
     logger.log("Invalid given QName");
@@ -6,4 +6,4 @@ if (documentQName == null || documentQName == ""){
     status.message = "Invalid given QName";
     status.redirect = true;
 }
-model.documentMetaDataFieldsQnames = dropDownListService.retrieveAllMetadataFieldsForQName(documentQName);
+model.documentMetaDataFieldsQnames = dropDownListService.retrieveAllMetadataFieldsForQName(documentQName.toString());

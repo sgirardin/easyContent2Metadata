@@ -17,16 +17,14 @@ public class ExtractorDropDownListService extends BaseProcessorExtension {
         return dictionaryService.getAllModels();
     }
 
-    public Collection<QName> retrievePropertiesForQName(QName documentModelQNames){
-        return dictionaryService.getAllProperties(documentModelQNames);
-    }
+    public Collection<QName> retrieveAllMetadataFieldsForQName(String documentModelQName){
+        QName qnameToSearch = QName.createQName(documentModelQName);
 
-    public Collection<QName> retrieveAllMetadataFieldsForQName(QName documentModelQNames){
-        Collection<QName> metadataQNames;
+        Collection<QName> metadataQNames = new ArrayList<>();
 
-        if (dictionaryService.getAllModels().contains(documentModelQNames)) {
-            metadataQNames = dictionaryService.getAllProperties(documentModelQNames);
-            metadataQNames.addAll(dictionaryService.getAspects(documentModelQNames));
+        if (dictionaryService.getAllModels().contains(qnameToSearch)) {
+            metadataQNames.addAll(dictionaryService.getProperties(qnameToSearch));
+            metadataQNames.addAll(dictionaryService.getAspects(qnameToSearch));
         } else {
             metadataQNames = new ArrayList<>();
         }
