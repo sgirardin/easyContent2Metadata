@@ -6,8 +6,7 @@
 
         YAHOO.util.Event.addListener(typeDropdown, "click", function(){
             var qnameToSearch = typeDropdown.value;
-            console.log("Dropdown Selected result" + qnameToSearch);
-            if(qnameToSearch != ''){
+            if(qnameToSearch !== ""){
                 new selectProperties("${fieldHtmlId}", qnameToSearch);
             }
         });
@@ -15,7 +14,7 @@
         function selectProperties(currentValueHtmlId, qnameToSearch) {
             this.currentValueHtmlId = currentValueHtmlId;
             var selectFieldQNames = Dom.get(this.currentValueHtmlId);
-            selectFieldQNames.selectedIndex = 0;
+            selectFieldQNames.options.length = 0;
             this.register = function () {
             // Call webscript
                 Alfresco.util.Ajax.jsonGet({
