@@ -2,18 +2,18 @@
 
     <script type="text/javascript">//<![CDATA[
     YAHOO.util.Event.onAvailable("${fieldHtmlId}", function(){
-        new selectAjax("${fieldHtmlId}");
+        new selectTypes("${fieldHtmlId}");
     });
 
-    function selectAjax(currentValueHtmlId) {
+    function selectTypes(currentValueHtmlId) {
         this.currentValueHtmlId = currentValueHtmlId;
         var selectDocumentQName = Dom.get(this.currentValueHtmlId);
         this.register = function () {
-// Call webscript
+            // Call webscript
             Alfresco.util.Ajax.jsonGet({
                 url: Alfresco.constants.PROXY_URI + "/e2cm/dropdownlist/retrieveallDocumentQNames",
                 successCallback: {
-                    fn: this.updateOptions,
+                    fn: this.updateTypeOptions,
                     scope: this
                 },
                 failureCallback: {
@@ -24,8 +24,8 @@
             });
         };
 
-// Add options into <select>
-        this.updateOptions = function (res) {
+        // Add options into <select>
+        this.updateTypeOptions = function (res) {
             var result = Alfresco.util.parseJSON(res.serverResponse.responseText);
             if (result.documentQNames.length > 0) {
                 var documentQNames = result.documentQNames;
