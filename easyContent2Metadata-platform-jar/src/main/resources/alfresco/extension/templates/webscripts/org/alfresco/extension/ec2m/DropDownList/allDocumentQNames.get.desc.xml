@@ -1,7 +1,7 @@
 <webscript>
     <shortname>All Documents QNames</shortname>
     <description>Retrieve all Documents QNames in the current Repository</description>
-    <url>/e2cm/dropdownlist/retrieveallDocumentQNames</url>
+    <url>/ec2m/dropdownlist/retrieveallDocumentQNames</url>
     <authentication>user</authentication>
     <format default="json"></format>
     <family>Easy Content 2 Metadata Module</family>
