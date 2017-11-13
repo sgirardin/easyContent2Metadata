@@ -18,7 +18,7 @@
             this.register = function () {
             // Call webscript
                 Alfresco.util.Ajax.jsonGet({
-                    url: "http://localhost:8080/alfresco/s/e2cm/dropdownlist/retrieveallMetadataFields?qname=" + qnameToSearch.toString(),
+                    url: Alfresco.constants.PROXY_URI + "/ec2m/dropdownlist/retrieveallMetadataFields?qname=" + encodeURIComponent(qnameToSearch.toString()),
                     successCallback: {
                         fn: this.updatePropertyOptions,
                         scope: this

@@ -11,7 +11,7 @@
         this.register = function () {
             // Call webscript
             Alfresco.util.Ajax.jsonGet({
-                url: Alfresco.constants.PROXY_URI + "/e2cm/dropdownlist/retrieveallDocumentQNames",
+                url: Alfresco.constants.PROXY_URI + "/ec2m/dropdownlist/retrieveallDocumentQNames",
                 successCallback: {
                     fn: this.updateTypeOptions,
                     scope: this
