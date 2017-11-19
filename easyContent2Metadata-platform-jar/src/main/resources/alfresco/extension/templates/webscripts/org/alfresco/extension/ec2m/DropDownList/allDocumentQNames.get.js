@@ -1,1 +1,1 @@
-model.documentQNames = dropDownListService.retrieveAllDocumentModelQName();
+model.documentQNames = dropDownListService.retrieveAllDocumentTypesQName();
