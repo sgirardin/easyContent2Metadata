@@ -8,7 +8,9 @@ import org.springframework.extensions.webscripts.DeclarativeWebScript;
 import java.util.ArrayList;
 import java.util.Collection;
 
-
+/**
+ * Service class that gives access to the Dictionary service functionalities to webscripts
+ */
 public class ExtractorDropDownListService extends BaseProcessorExtension {
 
     private DictionaryService dictionaryService;
@@ -25,8 +27,6 @@ public class ExtractorDropDownListService extends BaseProcessorExtension {
         if (dictionaryService.getAllTypes().contains(qnameToSearch)) {
             metadataQNames.addAll(dictionaryService.getType(qnameToSearch).getProperties().keySet());
             metadataQNames.addAll(dictionaryService.getType(qnameToSearch).getDefaultAspectNames());
-        } else {
-            metadataQNames = new ArrayList<>();
         }
 
         return metadataQNames;
