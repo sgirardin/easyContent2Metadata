@@ -11,12 +11,19 @@
 
     <bean id="PDFExtractor" class="org.alfresco.extension.ec2m.extractor.PDFExtractor" />
 
-    <bean id="com.mimacom.alfresco.fillmetadata.FillMetadataBehaviour" class="org.alfresco.extension.ec2m.filler.FillMetadataBehaviour"
+    <bean id="org.alfresco.extension.ec2m.filler.FillMetadataBehaviour" class="org.alfresco.extension.ec2m.filler.FillMetadataBehaviour"
           init-method="init">
         <property name="policyComponent" ref="policyComponent" />
         <property name="nodeService" ref="nodeService" />
         <property name="contentService" ref="contentService" />
         <property name="dataListsResolver" ref="DataListsResolver" />
         <property name="extractor" ref="PDFExtractor" />
+    </bean>
+
+
+    <bean id="org.alfresco.extension.ec2m.services.extractorDropDownList"
+          class="org.alfresco.extension.ec2m.services.ExtractorDropDownListService" parent="baseJavaScriptExtension">
+        <property name="dictionaryService" ref="dictionaryService"/>
+        <property name="extensionName" value="dropDownListService" />
     </bean>
 </beans>

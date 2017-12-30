@@ -30,7 +30,7 @@
         <property name="description"><value>org.alfresco.bootstrap.patch.groupsLoader.description</value></property>
         <property name="fixesFromSchema"><value>0</value></property>
         <property name="fixesToSchema"><value>${version.schema}</value></property>
-        <property name="targetSchema"><value>10008</value></property>
+        <property name="targetSchema"><value>10108</value></property>
         <property name="importerBootstrap">
             <ref bean="spacesBootstrap" />
         </property>
@@ -50,7 +50,7 @@
         <property name="description"><value>org.alfresco.bootstrap.patch.groupMembershipsLoader.description</value></property>
         <property name="fixesFromSchema"><value>0</value></property>
         <property name="fixesToSchema"><value>${version.schema}</value></property>
-        <property name="targetSchema"><value>10009</value></property>
+        <property name="targetSchema"><value>10109</value></property>
         <property name="dependsOn" >
             <list>
                 <ref bean="org.alfresco.bootstrap.patch.groupsLoader" />
@@ -74,7 +74,7 @@
         <property name="description"><value>org.alfresco.bootstrap.patch.metadataManagementDefaultSiteLoader</value></property>
         <property name="fixesFromSchema"><value>0</value></property>
         <property name="fixesToSchema"><value>${version.schema}</value></property>
-        <property name="targetSchema"><value>10010</value></property>
+        <property name="targetSchema"><value>10110</value></property>
         <property name="spacesBootstrap" ref="siteLoadBootstrap-Spaces"/>
         <property name="usersBootstrap" ref="siteLoadBootstrap-Users"/>
         <property name="siteService" ref="siteService"/>
