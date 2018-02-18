@@ -25,6 +25,6 @@ deploy:
       -"easyContent2Metadata-share-jar/target/easyContent2Metadata-share-jar-0.1-SNAPSHOT.jar"
   skip_cleanup: true
   on:
-    tags:true
+    tags: true
     repo: sgirardin/easyContent2Metadata
 
