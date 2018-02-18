@@ -7,6 +7,7 @@ addons:
     branches:
           - master
           - feature/*
+          - correction/*
 jdk:
   - oraclejdk8
 script:
@@ -15,3 +16,13 @@ cache:
   directories:
     - '$HOME/.m2/repository'
     - '$HOME/.sonar/cache'
+deploy:
+  provider: releases
+  api_key: "GITHUB OAUTH TOKEN"
+  overwrite: true
+  file:
+    -"easyContent2Metadata-platform-jar-*.jar"
+    -"easyContent2Metadata-share-jar-*.jar"
+  skip_cleanup: true
+  on:
+    tags: false
