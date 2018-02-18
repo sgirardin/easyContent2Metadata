@@ -1,0 +1,14 @@
+<webscript>
+    <shortname>Metadata Fields for passed QName</shortname>
+    <description>Retrieve all the Metadata Fields for passed QName</description>
+    <url>/ec2m/dropdownlist/retrieveallMetadataFields?qname={documentqname}</url>
+    <authentication>user</authentication>
+    <format default="json"></format>
+    <family>Easy Content 2 Metadata Module</family>
+    <args>
+        <arg>
+            <name>documentqname</name>
+            <description>Qname of the Document model you want to obtain the metadata fields (mandatory)</description>
+        </arg>
+    </args>
+</webscript>

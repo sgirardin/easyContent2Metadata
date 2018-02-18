@@ -367,6 +367,14 @@
                     <show id="ec2m:value" />
                     <show id="ec2m:item_active" />
                 </field-visibility>
+                <appearance>
+                    <field id="ec2m:type">
+                        <control template="/org/alfresco/form-controls/dynamic-type-dropdown.ftl"/>
+                    </field>
+                    <field id="ec2m:property">
+                        <control template="/org/alfresco/form-controls/dynamic-property-dropdown.ftl"/>
+                    </field>
+                </appearance>
             </form>
         </forms>
     </config>
