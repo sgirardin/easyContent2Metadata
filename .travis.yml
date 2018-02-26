@@ -3,15 +3,28 @@ sudo: false
 install: true
 addons:
   sonarqube:
-    organization: "sgirardin-github"
+    organization: sgirardin-github
     branches:
-          - master
-          - feature/*
+    - master
+    - feature/*
+    - correction/*
 jdk:
-  - oraclejdk8
+- oraclejdk8
 script:
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
 cache:
   directories:
-    - '$HOME/.m2/repository'
-    - '$HOME/.sonar/cache'
+  - "$HOME/.m2/repository"
+  - "$HOME/.sonar/cache"
+deploy:
+  provider: releases
+  api_key:
+    secure: WvZBVFFL02xe8DIz5MaRvZcb2UayqKvUSwKaS79BdmDfZO9ODJoi9uUvwypkYmYQ6Cac2LxdvQWtgekU60JtAWXHUUv2tGiy+chD70oxCUP1M3jOxXpzEOIlMuKhRYoOulaFJMVw1Y3KT/GiPR60Ksg5RGGcMlRw9dzs3A1PUsArd4VkTsGpfGaQFCImjNObZkbUgMm2YeieKG5V1DIvXw1+A6FMUbjSbtoCTCuq8fP5wLhF3ju9zO7LiQLGjHCwQBxGwZqf06hXIekaqqeD3bhIo+bTex1gSpS0S1fKUj7EdOyOmha9liyidcc7W1JTMcTwg/B4V2Fe+k5mySxOW/grL9Ts5BLNg5t5r9DzhG5Q6S9fYS9E6KVZqCwl0HyQ5wjZpxBLxbMcEIe7sih7USBGqoIautw2zPDW0EVMdCuoNL/W1PddvLl5jkl/GekXNfa7bml5ScglLB+6a8X2N/C7Aw/HefwNnFphK3fXEuDUBNv8tUKOTSXUvjH7M2S6PwnYuVwQXsIUReA/pscXP0lYs2Z2kLZp1sLef4RH+1EqvA3WQLZ3zXJ+caRHUfxHBB1PuKYQkEfc3U/Qd0wQ5tv3DWxu8aVQuJcQKK7lDE6CodObyEBJtydXPvtQncy/wEiEylA13dCcwcL67JyYRPN5OJSZvpWgrRdVLALcrnw=
+  file:
+      - "easyContent2Metadata-platform-jar/target/easyContent2Metadata-platform-jar-0.1-SNAPSHOT.jar"
+      - "easyContent2Metadata-share-jar/target/easyContent2Metadata-share-jar-0.1-SNAPSHOT.jar"
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: sgirardin/easyContent2Metadata
+
