@@ -37,25 +37,6 @@
     </constraints>
 
     <types>
-        <type name="ec2m:easyContent2MetadataDocument">
-            <title>EasyContent2Metadata Document Type Example</title>
-            <parent>cm:content</parent>
-            <properties>
-                <property name="ec2m:author">
-                    <title>Document Author</title>
-                    <type>d:text</type>
-                </property>
-                <property name="ec2m:city">
-                    <title>City</title>
-                    <type>d:text</type>
-                </property>
-                <property name="ec2m:date">
-                    <title>Date</title>
-                    <type>d:date</type>
-                </property>
-            </properties>
-        </type>
-
         <type name="ec2m:extractorMappingDatalist">
             <title>Extractor Mapping Datalist</title>
             <parent>dl:dataListItem</parent>
