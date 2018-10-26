@@ -1,6 +1,6 @@
 # Easy Content to Metadata
 
-Why this Alfresco extension? It's goal is to deliver to a non developer the ability to indicate for a specific document type where to find metadata. When extracted the value will be put it in the given field.
+Why this Alfresco extension? It's goal is to give a non developer the ability to fill metadata fields with data extracted from preselected areas on documents. He can indicate for a specific document type where to find metadata and to which field it is linked.
 For example: your invoices have the same information (let's say total amount) 
 * always in a certain area
 * correspond to a specific regex 
@@ -9,7 +9,7 @@ then this extension can extract the amount and feed it to the invoiceAmount fiel
 
 ## How to use it
 So how does it work:
-* After being installed, login Alfresco and go to the "Metadata Extraction Information" site
+* After being installed, login to Alfresco and go to the "Metadata Extraction Information" site
 * Choose the "Data lists" menu, then "Extractor Mapping Datalist" and click on " New Item"
 * In the modal view select first the type of document you want to extract the data
 * Then select the property of the document type to whom the data will be extracted.
