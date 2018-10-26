@@ -14,8 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.alfresco.events.types.DataType.Qname;
-
 public class DataListsResolver {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
@@ -24,17 +22,17 @@ public class DataListsResolver {
 	private StoreRef storeRef = new StoreRef(StoreRef.PROTOCOL_WORKSPACE, "SpacesStore");
 
 	public Map<String, String> getValuesByType(NodeRef documentToExtractMetadata){
-		List<NodeRef> datalistValues = getExtractorDatalist();
+		List<NodeRef> datalistValues = getExtractorDatalistValues();
 		return getMappingsByConfigurationAndType(datalistValues, documentToExtractMetadata, ConfigurationEnum.VALUE);
 	}
 
 	public Map<String, String> getRegexByType(NodeRef documentToExtractMetadata){
-		List<NodeRef> datalistValues = getExtractorDatalist();
+		List<NodeRef> datalistValues = getExtractorDatalistValues();
 		return getMappingsByConfigurationAndType(datalistValues, documentToExtractMetadata, ConfigurationEnum.REGEX);
 	}
 
 	public Map<String, String> getCoordinatesByType(NodeRef documentToExtractMetadata){
-		List<NodeRef> datalistValues = getExtractorDatalist();
+		List<NodeRef> datalistValues = getExtractorDatalistValues();
 		return getMappingsByConfigurationAndType(datalistValues, documentToExtractMetadata,ConfigurationEnum.COORDINATES);
 	}
 
@@ -50,7 +48,7 @@ public class DataListsResolver {
 	}
 
 	public boolean hasMappings(String documentModel){
-		List<NodeRef> datalistValues = getExtractorDatalist();
+		List<NodeRef> datalistValues = getExtractorDatalistValues();
 		for (NodeRef nodeRef : datalistValues) {
 			if (nodeService.getProperty(nodeRef, Constants.PROP_TYPE).equals(documentModel)) {
 				return true;
@@ -59,7 +57,7 @@ public class DataListsResolver {
 		return false;
 	}
 
-	private List<NodeRef> getExtractorDatalist(){
+	public List<NodeRef> getExtractorDatalistValues(){
 		String query ="TYPE:\""+ Constants.EXTRACTOR_MAPPING_TYPE_LIST +"\"";
 		ResultSet rs = searchService.query(storeRef, SearchService.LANGUAGE_LUCENE, query);
 

@@ -1,5 +1,6 @@
-package org.alfresco.extension.ec2m.utils;
+package org.alfresco.extension.ec2m;
 
+import org.alfresco.extension.ec2m.utils.Constants;
 import org.alfresco.service.namespace.QName;
 
 /**
