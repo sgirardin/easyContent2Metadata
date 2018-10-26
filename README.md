@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/sgirardin/easyContent2Metadata.svg?branch=master)](https://travis-ci.org/sgirardin/easyContent2Metadata)
 # Easy Content to Metadata
 
 Why this Alfresco extension? It's goal is to give a non developer the ability to fill metadata fields with data extracted from preselected areas on documents. He can indicate for a specific document type where to find metadata and to which field it is linked.
