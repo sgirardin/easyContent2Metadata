@@ -2,8 +2,8 @@ package org.alfresco.extension.ec2m.extractor;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.util.PDFTextStripper;
-import org.apache.pdfbox.util.PDFTextStripperByArea;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.pdfbox.text.PDFTextStripperByArea;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +32,7 @@ public class PDFExtractor implements Extractor{
             stripper.setSortByPosition( true );
             stripper.addRegion( METADATA_REGION, searchArea );
 
-            PDPage firstPage = (PDPage)pdfDocument.getDocumentCatalog().getAllPages().get(0);
+            PDPage firstPage = (PDPage)pdfDocument.getDocumentCatalog().getPages().get(0);
             stripper.extractRegions( firstPage );
 
             metadataValue = stripper.getTextForRegion( METADATA_REGION).trim();
