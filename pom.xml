@@ -34,7 +34,7 @@
         <!-- Environment configuration properties -->
         <share.port>8180</share.port>
         <share.debug.port>9898</share.debug.port>
-        <acs.host>easyContent2Metadata-acs</acs.host>
+        <acs.host>easycontent2metadata-acs</acs.host>
         <acs.port>8080</acs.port>
         <acs.debug.port>8888</acs.debug.port>
         <postgres.port>5555</postgres.port>

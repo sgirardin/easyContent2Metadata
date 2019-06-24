@@ -70,36 +70,36 @@ echo "Usage: %0 {build_start|start|stop|purge|tail|reload_share|reload_acs|build
 EXIT /B %ERRORLEVEL%
 
 :start
-    docker volume create easyContent2Metadata-acs-volume
-    docker volume create easyContent2Metadata-db-volume
-    docker volume create easyContent2Metadata-ass-volume
+    docker volume create easycontent2metadata-acs-volume
+    docker volume create easycontent2metadata-db-volume
+    docker volume create easycontent2metadata-ass-volume
     docker-compose -f "%COMPOSE_FILE_PATH%" up --build -d
 EXIT /B 0
 :start_share
-    docker-compose -f "%COMPOSE_FILE_PATH%" up --build -d easyContent2Metadata-share
+    docker-compose -f "%COMPOSE_FILE_PATH%" up --build -d easycontent2metadata-share
 EXIT /B 0
 :start_acs
-    docker-compose -f "%COMPOSE_FILE_PATH%" up --build -d easyContent2Metadata-acs
+    docker-compose -f "%COMPOSE_FILE_PATH%" up --build -d easycontent2metadata-acs
 EXIT /B 0
 :down
     docker-compose -f "%COMPOSE_FILE_PATH%" down
 EXIT /B 0
 :build
-    docker rmi alfresco-content-services-easyContent2Metadata:development
-    docker rmi alfresco-share-easyContent2Metadata:development
+    docker rmi alfresco-content-services-easycontent2metadata:development
+    docker rmi alfresco-share-easycontent2metadata:development
 	call %MVN_EXEC% clean install -DskipTests
 EXIT /B 0
 :build_share
-    docker-compose -f "%COMPOSE_FILE_PATH%" kill easyContent2Metadata-share
-    docker-compose -f "%COMPOSE_FILE_PATH%" rm -f easyContent2Metadata-share
-    docker rmi alfresco-share-easyContent2Metadata:development
-	call %MVN_EXEC% clean install -DskipTests -pl easyContent2Metadata-share-jar
+    docker-compose -f "%COMPOSE_FILE_PATH%" kill easycontent2metadata-share
+    docker-compose -f "%COMPOSE_FILE_PATH%" rm -f easycontent2metadata-share
+    docker rmi alfresco-share-easycontent2metadata:development
+	call %MVN_EXEC% clean install -DskipTests -pl easycontent2metadata-share-jar
 EXIT /B 0
 :build_acs
-    docker-compose -f "%COMPOSE_FILE_PATH%" kill easyContent2Metadata-acs
-    docker-compose -f "%COMPOSE_FILE_PATH%" rm -f easyContent2Metadata-acs
-    docker rmi alfresco-content-services-easyContent2Metadata:development
-	call %MVN_EXEC% clean install -DskipTests -pl easyContent2Metadata-platform-jar
+    docker-compose -f "%COMPOSE_FILE_PATH%" kill easycontent2metadata-acs
+    docker-compose -f "%COMPOSE_FILE_PATH%" rm -f easycontent2metadata-acs
+    docker rmi alfresco-content-services-easycontent2metadata:development
+	call %MVN_EXEC% clean install -DskipTests -pl easycontent2metadata-platform-jar
 EXIT /B 0
 :tail
     docker-compose -f "%COMPOSE_FILE_PATH%" logs -f
@@ -111,7 +111,7 @@ EXIT /B 0
     call %MVN_EXEC% verify -pl integration-tests
 EXIT /B 0
 :purge
-    docker volume rm easyContent2Metadata-acs-volume
-    docker volume rm easyContent2Metadata-db-volume
-    docker volume rm easyContent2Metadata-ass-volume
+    docker volume rm easycontent2metadata-acs-volume
+    docker volume rm easycontent2metadata-db-volume
+    docker volume rm easycontent2metadata-ass-volume
 EXIT /B 0
